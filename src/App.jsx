@@ -1448,7 +1448,8 @@ export default function SamgukjiGame() {
                   <polygon points="150,131 150,13 252,72 252,190" fill="rgba(122,176,64,0.28)" stroke="#7ab040" strokeWidth="1.5"/>
                   <polygon points="150,131 252,190 150,249 48,190" fill="rgba(200,160,48,0.28)" stroke="#c8a030" strokeWidth="1.5"/>
                   <polygon points="150,13 252,72 252,190 150,249 48,190 48,72" fill="none" stroke="rgba(200,160,40,0.9)" strokeWidth="2.5"/>
-                  <line x1="150" y1="131" x2="252" y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
+                  <defs><filter id="tGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                   <line x1="150" y1="131" x2="252" y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
                   <line x1="150" y1="131" x2="48"  y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
                   <text x="86"  y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">☯️</text>
                   <text x="86"  y="98"  textAnchor="middle" fontSize="13" fontWeight="700" fill="#4a90d9" fontFamily="serif">천(天)</text>
