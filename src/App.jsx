@@ -990,80 +990,79 @@ function HeroBackground() {
     <svg viewBox="0 0 700 420" style={{width:"100%",display:"block"}}>
       <defs>
         <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#050210"/>
-          <stop offset="40%" stopColor="#120818"/>
-          <stop offset="100%" stopColor="#060a04"/>
+          <stop offset="0%" stopColor="#3a2a0a"/>
+          <stop offset="40%" stopColor="#5a3a10"/>
+          <stop offset="100%" stopColor="#2a1800"/>
         </linearGradient>
         <linearGradient id="hGold" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#a07020"/><stop offset="50%" stopColor="#f0d060"/><stop offset="100%" stopColor="#a07020"/>
         </linearGradient>
         <linearGradient id="hFog" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(0,0,0,0)"/><stop offset="100%" stopColor="rgba(5,2,10,0.95)"/>
+          <stop offset="0%" stopColor="rgba(0,0,0,0)"/><stop offset="100%" stopColor="rgba(5,2,0,0.92)"/>
+        </linearGradient>
+        <linearGradient id="hGreen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#3a6a20"/><stop offset="100%" stopColor="#5a8a30"/>
+        </linearGradient>
+        <linearGradient id="hBrown" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#8a5a20"/><stop offset="100%" stopColor="#a07030"/>
         </linearGradient>
         <filter id="hG"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         <filter id="hSG"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="hBlur"><feGaussianBlur stdDeviation="4"/></filter>
       </defs>
+
+      {/* 배경 - 고지도 느낌 */}
       <rect width="700" height="420" fill="url(#hSky)"/>
-      {[[30,15,1.2,"#ffe8a0"],[80,28,0.9,"#fff"],[140,10,1.4,"#fff"],[195,22,0.8,"#a0c8ff"],[250,8,1.1,"#fff"],[310,18,0.9,"#fff"],[368,12,1.3,"#ffe8a0"],[425,25,0.8,"#fff"],[480,14,1,"#fff"],[538,20,1.2,"#fff"],[595,9,0.9,"#a0c8ff"],[650,24,1.1,"#fff"],[690,16,1.3,"#ffe8a0"],[55,50,0.8,"#fff"],[115,42,1.1,"#fff"],[170,58,0.9,"#a0c8ff"],[228,45,1,"#fff"],[285,55,1.2,"#ffe8a0"],[342,48,0.8,"#fff"],[400,60,1.1,"#fff"],[458,44,0.9,"#fff"],[515,52,1.3,"#a0c8ff"],[572,47,0.8,"#fff"],[630,55,1,"#fff"],[675,42,0.9,"#ffe8a0"]].map(([x,y,r,c],i)=><circle key={i} cx={x} cy={y} r={r} fill={c} opacity={0.3+((i*7)%10)*0.06}/>)}
-      <circle cx="598" cy="55" r="30" fill="#f8f0e0" opacity="0.12" filter="url(#hSG)"/>
-      <circle cx="598" cy="55" r="22" fill="#faf4e8" opacity="0.3" filter="url(#hG)"/>
-      <circle cx="598" cy="55" r="18" fill="#fcf8f0" opacity="0.55"/>
-      <circle cx="607" cy="49" r="14" fill="#060a10" opacity="0.7"/>
-      <path d="M175,148 Q205,118 248,112 Q292,106 335,114 Q378,120 408,114 Q438,108 465,118 Q492,126 510,142 Q525,156 520,174 Q530,192 514,212 Q500,228 482,240 Q462,252 440,258 Q418,264 396,266 Q374,268 352,272 Q330,276 308,278 Q285,280 262,275 Q238,270 218,262 Q196,252 184,238 Q170,223 168,206 Q165,190 168,175 Q170,161 175,148Z" fill="rgba(25,16,6,0.85)" stroke="rgba(180,140,40,0.5)" strokeWidth="1.2"/>
-      <path d="M245,128 Q278,115 318,119 Q358,123 382,130 Q402,136 405,148 Q402,162 382,167 Q360,171 334,169 Q308,167 282,163 Q258,159 244,151 Q232,144 236,135Z" fill="rgba(20,60,20,0.6)" stroke="rgba(80,160,60,0.6)" strokeWidth="1"/>
-      <text x="322" y="150" textAnchor="middle" fontSize="11" fill="rgba(120,220,90,1)" fontFamily="serif" fontWeight="700" filter="url(#hG)">위(魏)</text>
-      <path d="M192,166 Q210,152 236,156 Q256,160 263,174 Q266,190 255,203 Q241,216 224,220 Q206,222 195,211 Q184,200 184,185 Q183,173 192,166Z" fill="rgba(70,20,15,0.6)" stroke="rgba(190,70,50,0.6)" strokeWidth="1"/>
-      <text x="223" y="192" textAnchor="middle" fontSize="11" fill="rgba(230,120,90,1)" fontFamily="serif" fontWeight="700" filter="url(#hG)">촉(蜀)</text>
-      <path d="M368,182 Q400,174 432,178 Q460,184 472,198 Q478,214 465,228 Q450,242 426,247 Q400,250 377,244 Q355,236 349,220 Q344,205 355,194Z" fill="rgba(15,35,70,0.6)" stroke="rgba(50,110,200,0.6)" strokeWidth="1"/>
-      <text x="412" y="215" textAnchor="middle" fontSize="11" fill="rgba(90,160,250,1)" fontFamily="serif" fontWeight="700" filter="url(#hG)">오(吳)</text>
-      <path d="M188,143 Q222,132 262,135 Q302,138 342,133 Q380,128 412,136 Q435,142 448,155" fill="none" stroke="rgba(70,130,200,0.5)" strokeWidth="3" strokeLinecap="round"/>
-      <path d="M198,212 Q234,205 270,208 Q308,212 342,207 Q374,202 404,210 Q432,218 458,230" fill="none" stroke="rgba(50,110,180,0.45)" strokeWidth="2.2" strokeLinecap="round"/>
-      {[[252,160],[265,155],[278,160],[291,155],[304,160],[317,155],[330,160]].map(([x,y],i)=><polygon key={i} points={`${x},${y} ${x+6},${y-10} ${x+12},${y}`} fill="rgba(90,70,35,0.55)" stroke="rgba(150,120,50,0.35)" strokeWidth="0.6"/>)}
-      <g filter="url(#hG)" opacity="0.92">
-        <path d="M15,168 Q48,145 82,152 Q116,159 138,147 Q162,134 184,140 Q200,145 205,158" fill="none" stroke="rgba(240,200,60,0.3)" strokeWidth="10" strokeLinecap="round"/>
-        <path d="M15,168 Q48,145 82,152 Q116,159 138,147 Q162,134 184,140 Q200,145 205,158" fill="none" stroke="#c8a030" strokeWidth="5" strokeLinecap="round"/>
-        <ellipse cx="18" cy="170" rx="13" ry="9" fill="#b8920a"/><ellipse cx="11" cy="167" rx="8" ry="6" fill="#f0d040"/>
-        <circle cx="9" cy="165" r="3" fill="#ff3300" filter="url(#hG)"/><circle cx="9" cy="165" r="1.2" fill="#ffff00"/>
-        <path d="M14,163 Q12,154 17,150" fill="none" stroke="#f0d040" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M18,162 Q18,153 23,149" fill="none" stroke="#f0d040" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M8,168 Q1,165 -3,170" fill="none" stroke="rgba(240,210,80,0.8)" strokeWidth="1.2" strokeLinecap="round"/>
-        <path d="M205,158 Q218,162 224,174 Q228,186 220,193" fill="none" stroke="#c8a030" strokeWidth="3.5" strokeLinecap="round"/>
-        <path d="M4,172 Q-5,175 -8,184 Q-2,177 3,180 Q-4,188 0,196" fill="none" stroke="rgba(255,140,20,0.8)" strokeWidth="2" strokeLinecap="round"/>
-      </g>
-      <g filter="url(#hG)" opacity="0.88">
-        <path d="M685,200 Q652,178 618,184 Q584,190 560,178 Q534,165 510,170 Q494,175 490,188" fill="none" stroke="rgba(240,80,40,0.3)" strokeWidth="10" strokeLinecap="round"/>
-        <path d="M685,200 Q652,178 618,184 Q584,190 560,178 Q534,165 510,170 Q494,175 490,188" fill="none" stroke="#c03020" strokeWidth="5" strokeLinecap="round"/>
-        <ellipse cx="682" cy="202" rx="13" ry="9" fill="#8a1808"/><ellipse cx="689" cy="199" rx="8" ry="6" fill="#d03818"/>
-        <circle cx="691" cy="197" r="3" fill="#ffdd00" filter="url(#hG)"/>
-        <path d="M686,196 Q688,187 684,183" fill="none" stroke="#d03818" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M682,195 Q682,186 677,182" fill="none" stroke="#d03818" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M490,188 Q478,192 473,204 Q470,215 477,222" fill="none" stroke="#c03020" strokeWidth="3.5" strokeLinecap="round"/>
-        <path d="M696,204 Q706,207 709,217 Q703,210 698,213 Q704,221 700,229" fill="none" stroke="rgba(255,140,20,0.8)" strokeWidth="2" strokeLinecap="round"/>
-      </g>
-      <g filter="url(#hG)" opacity="0.8">
-        <path d="M350,52 Q325,36 308,40 Q300,46 308,54 Q320,60 338,56 Q348,54 350,52Z" fill="#c8a020"/>
-        <path d="M350,52 Q375,36 392,40 Q400,46 392,54 Q380,60 362,56 Q352,54 350,52Z" fill="#c03020"/>
-        <ellipse cx="350" cy="56" rx="9" ry="7" fill="#f0d040" opacity="0.9"/>
-        <circle cx="350" cy="50" r="6" fill="#f8e860" opacity="0.95"/>
-        <path d="M345,62 Q336,76 328,90 Q322,100 332,98" fill="none" stroke="#c8a020" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M355,62 Q364,76 372,90 Q378,100 368,98" fill="none" stroke="#c03020" strokeWidth="1.5" strokeLinecap="round"/>
-      </g>
-      <g opacity="0.55" filter="url(#hG)">
-        <ellipse cx="80" cy="88" rx="50" ry="18" fill="rgba(210,190,150,0.18)"/>
-        <ellipse cx="55" cy="80" rx="32" ry="14" fill="rgba(215,195,155,0.16)"/>
-        <ellipse cx="108" cy="82" rx="38" ry="14" fill="rgba(205,185,145,0.14)"/>
-      </g>
-      <g opacity="0.55" filter="url(#hG)">
-        <ellipse cx="190" cy="95" rx="55" ry="19" fill="rgba(200,175,130,0.17)"/>
-        <ellipse cx="162" cy="87" rx="36" ry="15" fill="rgba(205,180,135,0.15)"/>
-      </g>
+      <rect width="700" height="420" fill="url(#hBrown)" opacity="0.3"/>
+
+      {/* 산맥 - 서쪽 */}
+      <path d="M0,180 Q20,140 40,155 Q60,120 80,138 Q100,105 120,125 Q140,95 160,115 Q170,125 175,145 L0,250Z" fill="rgba(100,70,30,0.7)" stroke="rgba(150,110,50,0.4)" strokeWidth="1"/>
+      <path d="M0,170 Q15,135 35,148 Q55,115 75,132 Q95,100 115,120 Q135,90 155,110" fill="none" stroke="rgba(180,140,70,0.5)" strokeWidth="1.5"/>
+
+      {/* 산맥 - 북쪽 */}
+      <path d="M200,0 Q240,25 260,15 Q290,35 320,20 Q350,38 380,22 Q410,40 440,18 Q470,35 500,10 L500,0Z" fill="rgba(90,65,25,0.6)"/>
+
+      {/* 강 */}
+      <path d="M180,80 Q250,100 320,110 Q390,120 450,140 Q500,158 540,180 Q580,200 620,195 Q660,190 700,200" fill="none" stroke="rgba(60,120,200,0.6)" strokeWidth="4" strokeLinecap="round"/>
+      <path d="M300,200 Q340,220 380,240 Q420,255 460,260 Q500,265 530,280" fill="none" stroke="rgba(60,120,200,0.5)" strokeWidth="3" strokeLinecap="round"/>
+      <path d="M100,150 Q130,170 160,200 Q180,225 195,260" fill="none" stroke="rgba(60,120,200,0.45)" strokeWidth="2.5" strokeLinecap="round"/>
+
+      {/* 위(魏) 영토 - 붉은색, 북동쪽 */}
+      <path d="M320,30 Q400,20 480,35 Q550,50 600,80 Q650,110 680,150 Q700,180 700,220 Q680,240 640,245 Q600,250 560,240 Q520,228 490,210 Q460,195 430,175 Q400,155 370,140 Q340,128 310,120 Q290,115 280,105 Q270,90 280,65 Q290,45 320,30Z" fill="rgba(160,50,30,0.45)" stroke="rgba(220,80,50,0.7)" strokeWidth="1.5"/>
+      <text x="520" y="130" textAnchor="middle" fontSize="28" fontWeight="700" fill="rgba(240,100,70,0.95)" fontFamily="serif" filter="url(#hG)">魏</text>
+      <text x="520" y="155" textAnchor="middle" fontSize="11" fill="rgba(240,150,120,0.8)" fontFamily="serif">위(魏)</text>
+
+      {/* 촉(蜀) 영토 - 녹색, 서남쪽 */}
+      <path d="M60,180 Q100,155 145,160 Q185,165 215,180 Q240,195 248,220 Q252,245 240,270 Q225,295 200,310 Q175,322 148,320 Q120,315 98,300 Q75,284 62,262 Q48,238 48,212 Q50,195 60,180Z" fill="rgba(40,110,40,0.45)" stroke="rgba(70,180,70,0.7)" strokeWidth="1.5"/>
+      <text x="155" y="242" textAnchor="middle" fontSize="28" fontWeight="700" fill="rgba(80,210,80,0.95)" fontFamily="serif" filter="url(#hG)">蜀</text>
+      <text x="155" y="267" textAnchor="middle" fontSize="11" fill="rgba(120,220,120,0.8)" fontFamily="serif">촉(蜀)</text>
+
+      {/* 오(吳) 영토 - 파란색, 동남쪽 */}
+      <path d="M340,230 Q390,215 440,220 Q490,228 530,248 Q565,268 578,295 Q588,320 575,345 Q558,365 530,375 Q498,382 465,378 Q430,372 400,358 Q368,342 350,318 Q330,292 330,265 Q330,248 340,230Z" fill="rgba(30,80,160,0.45)" stroke="rgba(60,130,230,0.7)" strokeWidth="1.5"/>
+      <text x="455" y="300" textAnchor="middle" fontSize="28" fontWeight="700" fill="rgba(80,160,255,0.95)" fontFamily="serif" filter="url(#hG)">吳</text>
+      <text x="455" y="325" textAnchor="middle" fontSize="11" fill="rgba(120,190,255,0.8)" fontFamily="serif">오(吳)</text>
+
+      {/* 주요 도시 */}
+      <circle cx="480" cy="90" r="5" fill="rgba(240,200,80,0.9)" stroke="rgba(200,160,40,0.8)" strokeWidth="1.5"/>
+      <text x="480" y="80" textAnchor="middle" fontSize="9" fill="rgba(240,210,120,0.9)" fontFamily="serif">낙양</text>
+      <circle cx="400" cy="105" r="4" fill="rgba(240,200,80,0.8)" stroke="rgba(200,160,40,0.7)" strokeWidth="1"/>
+      <text x="400" y="96" textAnchor="middle" fontSize="9" fill="rgba(240,210,120,0.85)" fontFamily="serif">허창</text>
+      <circle cx="280" cy="190" r="4" fill="rgba(240,200,80,0.8)" stroke="rgba(200,160,40,0.7)" strokeWidth="1"/>
+      <text x="280" y="180" textAnchor="middle" fontSize="9" fill="rgba(240,210,120,0.85)" fontFamily="serif">형주</text>
+      <circle cx="120" cy="240" r="4" fill="rgba(240,200,80,0.8)" stroke="rgba(200,160,40,0.7)" strokeWidth="1"/>
+      <text x="120" y="230" textAnchor="middle" fontSize="9" fill="rgba(240,210,120,0.85)" fontFamily="serif">성도</text>
+      <circle cx="560" cy="290" r="4" fill="rgba(240,200,80,0.8)" stroke="rgba(200,160,40,0.7)" strokeWidth="1"/>
+      <text x="560" y="280" textAnchor="middle" fontSize="9" fill="rgba(240,210,120,0.85)" fontFamily="serif">건업</text>
+
+      {/* 안개 */}
       <rect width="700" height="420" fill="url(#hFog)" y="200"/>
-      <text x="350" y="332" textAnchor="middle" fontSize="36" fontWeight="700" fill="url(#hGold)" fontFamily="serif" letterSpacing="10" filter="url(#hSG)">天下統一</text>
-      <text x="350" y="350" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.8)" fontFamily="serif" letterSpacing="4">천하통일(天下統一)</text>
-      <text x="350" y="362" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.75)" fontFamily="serif" letterSpacing="5">삼국지 AI 무한 전략 시뮬레이션</text>
-      <line x1="140" y1="376" x2="560" y2="376" stroke="rgba(200,160,40,0.35)" strokeWidth="0.8"/>
-      <circle cx="350" cy="376" r="3.5" fill="rgba(200,160,40,0.7)"/>
-      <circle cx="140" cy="376" r="2" fill="rgba(200,160,40,0.4)"/><circle cx="560" cy="376" r="2" fill="rgba(200,160,40,0.4)"/>
+
+      {/* 타이틀 */}
+      <text x="350" y="320" textAnchor="middle" fontSize="40" fontWeight="700" fill="url(#hGold)" fontFamily="serif" letterSpacing="10" filter="url(#hSG)">天下統一</text>
+      <text x="350" y="355" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.75)" fontFamily="serif" letterSpacing="5">삼국지 AI 무한 전략 시뮬레이션</text>
+      <line x1="140" y1="370" x2="560" y2="370" stroke="rgba(200,160,40,0.35)" strokeWidth="0.8"/>
+      <circle cx="350" cy="370" r="3.5" fill="rgba(200,160,40,0.7)"/>
+      <circle cx="140" cy="370" r="2" fill="rgba(200,160,40,0.4)"/><circle cx="560" cy="370" r="2" fill="rgba(200,160,40,0.4)"/>
     </svg>
   );
 }
