@@ -1059,7 +1059,7 @@ function HeroBackground() {
       </g>
       <rect width="700" height="420" fill="url(#hFog)" y="200"/>
       <text x="350" y="332" textAnchor="middle" fontSize="36" fontWeight="700" fill="url(#hGold)" fontFamily="serif" letterSpacing="10" filter="url(#hSG)">天下統一</text>
-      <text x="350" y="332" textAnchor="middle" fontSize="36" fontWeight="700" fill="url(#hGold)" fontFamily="serif" letterSpacing="10">천하통일(天下統一)</text>
+      <text x="350" y="350" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.8)" fontFamily="serif" letterSpacing="4">천하통일(天下統一)</text>
       <text x="350" y="362" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.75)" fontFamily="serif" letterSpacing="5">삼국지 AI 무한 전략 시뮬레이션</text>
       <line x1="140" y1="376" x2="560" y2="376" stroke="rgba(200,160,40,0.35)" strokeWidth="0.8"/>
       <circle cx="350" cy="376" r="3.5" fill="rgba(200,160,40,0.7)"/>
