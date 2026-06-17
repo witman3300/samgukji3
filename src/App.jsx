@@ -1452,14 +1452,14 @@ export default function SamgukjiGame() {
                    <line x1="150" y1="131" x2="252" y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
                   <line x1="150" y1="131" x2="48"  y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
                   <text x="86"  y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">☯️</text>
-                  <text x="86"  y="98"  textAnchor="middle" fontSize="13" fontWeight="700" fill="#4a90d9" fontFamily="serif">진(眞)</text>
-                  <text x="86"  y="113" textAnchor="middle" fontSize="8.5" fill="#4a90d9" fontFamily="serif" opacity="0.9">자강불식</text>
+                  <text x="86"  y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">진(眞)</text>
+                  <text x="86"  y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">자강불식</text>
                   <text x="214" y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">🌾</text>
-                  <text x="214" y="98"  textAnchor="middle" fontSize="13" fontWeight="700" fill="#7ab040" fontFamily="serif">선(善)</text>
-                  <text x="214" y="113" textAnchor="middle" fontSize="8.5" fill="#7ab040" fontFamily="serif" opacity="0.9">선한 행동</text>
+                  <text x="214" y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#8edd50" fontFamily="Noto Serif KR,serif">선(善)</text>
+                  <text x="214" y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#8edd50" fontFamily="Noto Serif KR,serif">선한 행동</text>
                   <text x="150" y="170" textAnchor="middle" fontSize="22" dominantBaseline="middle">👥</text>
-                  <text x="150" y="194" textAnchor="middle" fontSize="13" fontWeight="700" fill="#c8a030" fontFamily="serif">미(美)</text>
-                  <text x="150" y="209" textAnchor="middle" fontSize="8.5" fill="#c8a030" fontFamily="serif" opacity="0.9">아름다운 삶</text>
+                  <text x="150" y="196" textAnchor="middle" fontSize="20" fontWeight="900" fill="#f0c840" fontFamily="Noto Serif KR,serif">미(美)</text>
+                  <text x="150" y="214" textAnchor="middle" fontSize="12" fontWeight="700" fill="#f0c840" fontFamily="Noto Serif KR,serif">아름다운 삶</text>
                   <circle cx="150" cy="131" r="6" fill="rgba(200,160,40,0.15)" stroke="rgba(200,160,40,0.8)" strokeWidth="1.5"/>
                   <circle cx="150" cy="131" r="2.5" fill="#c8a030" opacity="0.95"/>
                 </svg>
