@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 // ── 진선미 철학 ────────────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════
 const CHEONJIIN = [
-  { key:"cheon", hanja:"진(眞)", name:"진실한 마음", emoji:"💎", color:"#4a90d9",
+  { key:"cheon", hanja:"진(眞)", name:"자강불식", emoji:"💎", color:"#4a90d9",
     desc:"초심을 잃지 않는 마음. 흔들리는 세상에서도 변치 않는 뜻.",
     wisdom:"하늘은 항상 그 자리에 있다. 흔들리는 것은 세상이지, 뜻이 아니다." },
   { key:"ji",    hanja:"선(善)", name:"선한 행동",   emoji:"🌿", color:"#7ab040",
@@ -208,7 +208,7 @@ const SITUATION_DB = {
       story:"유비가 세 번 찾아왔다. 제갈량은 그 진심에 감동받았다. 진정성이 천하의 인재를 움직인다.",
       question:"진정성으로 인재를 설득하는 방법은?",
       options:[
-        { cji:"天", text:"세 번 찾아가며 포기하지 않는다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:96 },
+        { cji:"天", text:"세 번 찾아가며 포기하지 않는다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:96 },
         { cji:"地", text:"상대가 원하는 것을 먼저 파악해 제공한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"대의를 설명하고 함께할 것을 청한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -216,7 +216,7 @@ const SITUATION_DB = {
       story:"순욱이 조조에게 곽가·정욱·유엽 등을 추천했다. 뛰어난 참모는 또 다른 인재를 알아본다.",
       question:"인재가 인재를 추천하게 만드는 방법은?",
       options:[
-        { cji:"天", text:"인재를 잘 대우해 좋은 평판을 만든다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"인재를 잘 대우해 좋은 평판을 만든다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"추천 인재의 성과를 공개적으로 칭찬한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"인재 추천 시스템을 제도화한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -224,7 +224,7 @@ const SITUATION_DB = {
       story:"여포를 처형하자 부하 장료가 당당하게 결박된 채 서 있었다. 조조가 직접 풀어주었다. 용기 있는 적을 포용하는 아량.",
       question:"항복한 적 장수를 포용하는 방법은?",
       options:[
-        { cji:"天", text:"용기와 능력을 인정하고 전향을 권유한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"용기와 능력을 인정하고 전향을 권유한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"충성을 시험하며 점진적으로 신뢰한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"중요 임무를 주어 능력을 검증한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -232,7 +232,7 @@ const SITUATION_DB = {
       story:"제갈량이 출사표를 쓰며 눈물을 흘렸다. 충성의 극치. 글 한 편이 후세에 길이 남는 충성의 표상이 되었다.",
       question:"충성을 표현하는 가장 진정한 방법은?",
       options:[
-        { cji:"天", text:"행동으로 증명한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"행동으로 증명한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"말과 글로 분명히 표현한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"묵묵히 맡은 바를 다한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -240,7 +240,7 @@ const SITUATION_DB = {
       story:"노숙이 손권에게 천하이분지계를 설명했다. '한실은 이미 기울었습니다. 강동을 지키고 기회를 노리십시오.' 장기 전략의 중요성.",
       question:"장기 전략을 수립하는 방법은?",
       options:[
-        { cji:"天", text:"20년 이상을 내다보는 큰 그림을 그린다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"20년 이상을 내다보는 큰 그림을 그린다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"단기 목표를 달성하며 장기 방향을 잡는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"전문가의 조언을 종합해 전략을 짠다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -248,7 +248,7 @@ const SITUATION_DB = {
       story:"주유가 젊은 나이에 죽으며 노숙을 후계로 추천했다. '공명을 빼면 노숙이 최고입니다.' 죽음 앞에서도 조직을 생각한다.",
       question:"핵심 인재의 갑작스러운 사망에 대비하는 방법은?",
       options:[
-        { cji:"天", text:"항상 후계자를 준비해둔다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"항상 후계자를 준비해둔다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"복수의 인재를 동시에 육성한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"인재가 스스로 후계를 추천하게 한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -256,7 +256,7 @@ const SITUATION_DB = {
       story:"조자룡이 혼자 조조 백만 대군 속을 뚫고 아두를 구했다. 이것이 진정한 충성이다. 목숨을 걸어야 할 때 목숨을 건다.",
       question:"목숨을 다하는 충성을 이끌어내는 방법은?",
       options:[
-        { cji:"天", text:"군주가 먼저 부하를 가족처럼 대한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:97 },
+        { cji:"天", text:"군주가 먼저 부하를 가족처럼 대한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:97 },
         { cji:"地", text:"공정한 보상으로 헌신을 인정한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"대의와 명분으로 충성의 이유를 만든다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:92 },
       ] },
@@ -264,7 +264,7 @@ const SITUATION_DB = {
       story:"장료가 7000명으로 손권 10만을 막았다. 목숨 걸고 선봉에 선 장수가 아군의 사기를 올린다.",
       question:"열세 병력으로 사기를 유지하는 방법은?",
       options:[
-        { cji:"天", text:"지휘관이 직접 선두에 선다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"지휘관이 직접 선두에 선다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"결정적 승리를 하나 만들어 사기를 올린다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"철저한 방어 태세로 안전을 보장한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -272,7 +272,7 @@ const SITUATION_DB = {
       story:"마초가 조조를 추격할 때 허저가 목숨을 걸고 막았다. 진정한 충신은 위기에 빛난다.",
       question:"위기에서 부하의 충성을 이끌어내는 방법은?",
       options:[
-        { cji:"天", text:"평소에 부하와 신뢰를 쌓는다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"평소에 부하와 신뢰를 쌓는다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"위기 시 군주가 먼저 용기를 보인다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"충성에 반드시 보답한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -280,7 +280,7 @@ const SITUATION_DB = {
       story:"제갈량이 한중의 방어 체계를 철저히 구축했다. '이길 수 없으면 지켜라. 지킬 수 있으면 공격하라.' 방어와 공격의 균형.",
       question:"방어와 공격의 균형을 맞추는 방법은?",
       options:[
-        { cji:"天", text:"방어를 완벽히 한 후 공격에 나선다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"방어를 완벽히 한 후 공격에 나선다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"상황에 따라 유연하게 선택한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"항상 공격적 자세를 유지한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -288,7 +288,7 @@ const SITUATION_DB = {
       story:"손권이 말했다. '나는 형의 기업을 이었지만 형보다 더 뛰어난 참모를 얻었다.' 겸손함이 인재를 모은다.",
       question:"겸손으로 인재를 모으는 방법은?",
       options:[
-        { cji:"天", text:"자신의 한계를 인정하고 도움을 청한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"자신의 한계를 인정하고 도움을 청한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"인재의 공을 자신의 것으로 삼지 않는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"인재의 의견을 항상 경청한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -296,7 +296,7 @@ const SITUATION_DB = {
       story:"조조가 관우에게 금은보화와 높은 지위를 주었지만 관우의 마음은 유비에게 있었다. 진정한 인재는 돈으로 살 수 없다.",
       question:"돈으로 살 수 없는 충성을 얻는 방법은?",
       options:[
-        { cji:"天", text:"같은 뜻과 가치관을 공유한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"같은 뜻과 가치관을 공유한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"인재가 원하는 환경과 역할을 만든다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"진심 어린 관계를 먼저 쌓는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -304,7 +304,7 @@ const SITUATION_DB = {
       story:"조조가 서서의 모친을 인질로 잡아 서서를 강제로 데려갔다. 유비는 슬픔 속에서도 강제로 잡지 않았다. '그는 내 마음을 이미 알고 있다.'",
       question:"부하가 떠날 때 어떻게 대해야 하는가?",
       options:[
-        { cji:"天", text:"진심으로 아쉬워하며 떠나도록 허락한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"진심으로 아쉬워하며 떠나도록 허락한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"붙잡아서 함께하도록 설득한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:82 },
         { cji:"人", text:"더 좋은 조건을 제시해 마음을 돌린다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -312,7 +312,7 @@ const SITUATION_DB = {
       story:"방통이 처음 유비를 만났을 때 인정받지 못했다. 제갈량의 추천으로 재기용됐다. 인재를 알아보는 데도 시간이 필요하다.",
       question:"숨은 인재를 발굴하는 방법은?",
       options:[
-        { cji:"天", text:"다양한 기회를 주어 능력을 관찰한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"다양한 기회를 주어 능력을 관찰한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"신뢰할 수 있는 사람의 추천을 경청한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"첫인상에 속지 않고 재평가한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -320,7 +320,7 @@ const SITUATION_DB = {
       story:"마량이 동오에 사신으로 가 손권을 설득했다. 뛰어난 외교관이 전쟁을 막는다.",
       question:"뛰어난 외교관을 양성하는 방법은?",
       options:[
-        { cji:"天", text:"다양한 문화와 전략을 배우게 한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"다양한 문화와 전략을 배우게 한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"실전 외교 경험을 쌓게 한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"탁월한 언변과 인품을 먼저 개발한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -328,7 +328,7 @@ const SITUATION_DB = {
       story:"36세 육손이 대도독이 되었다. 모두가 의아해했다. 젊음과 경험 부족이 오히려 선입견 없는 전략을 가능하게 했다.",
       question:"젊은 인재를 발탁하는 방법은?",
       options:[
-        { cji:"天", text:"나이보다 능력과 잠재력을 본다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"나이보다 능력과 잠재력을 본다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"전권을 주고 완전히 믿는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"경험자를 조언자로 붙여 보조한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -336,7 +336,7 @@ const SITUATION_DB = {
       story:"강유가 제갈량에게 귀순했다. 적의 인재를 얻는 것이 전쟁에서 이기는 것보다 낫다.",
       question:"적의 뛰어난 인재를 아군으로 만드는 방법은?",
       options:[
-        { cji:"天", text:"진심으로 환영하고 능력을 인정한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"진심으로 환영하고 능력을 인정한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"귀순 인재에게 즉각 중요 임무를 준다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"관찰 기간을 두어 충성도를 확인한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -344,7 +344,7 @@ const SITUATION_DB = {
       story:"제갈량의 군량 공급 문제를 사마의가 알고 있었다. '공명은 작은 일도 직접 한다. 오래 가지 못할 것이다.' 권한 위임의 중요성.",
       question:"권한을 적절히 위임하는 방법은?",
       options:[
-        { cji:"天", text:"믿을 수 있는 사람에게 전권을 준다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"믿을 수 있는 사람에게 전권을 준다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"핵심 결정만 직접 하고 나머지는 위임한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:92 },
         { cji:"人", text:"단계적으로 권한을 늘려간다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -352,7 +352,7 @@ const SITUATION_DB = {
       story:"유비·관우·장비 삼인방이 처음 뭉쳤다. 지도자·실행자·돌격대의 완벽한 조합. 팀이 전부다.",
       question:"완벽한 팀을 구성하는 방법은?",
       options:[
-        { cji:"天", text:"각자의 강점이 서로 보완되도록 구성한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"각자의 강점이 서로 보완되도록 구성한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"같은 가치관과 목표를 공유하는 사람을 모은다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"능력보다 신뢰와 의리를 우선시한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:95 },
       ] },
@@ -360,7 +360,7 @@ const SITUATION_DB = {
       story:"황건적 투항자 30만 중 10만을 정예로 훈련시켰다. 원자재를 가공해 최고의 제품을 만드는 능력.",
       question:"원석을 보석으로 만드는 인재 교육 방법은?",
       options:[
-        { cji:"天", text:"기본기를 철저히 교육한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"기본기를 철저히 교육한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"실전 경험을 통해 빠르게 성장시킨다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"탁월한 지도자가 직접 훈련한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -368,7 +368,7 @@ const SITUATION_DB = {
       story:"손권이 주유·노숙 등 젊은 장수들을 과감히 발탁했다. '아버지와 형이 쓰지 않은 인재가 내 인재다.'",
       question:"이전 세대가 놓친 인재를 발굴하는 방법은?",
       options:[
-        { cji:"天", text:"선입견 없이 새로운 인재를 평가한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"선입견 없이 새로운 인재를 평가한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"은거하거나 알려지지 않은 인재를 찾는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"내부 추천보다 외부 탐색을 병행한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -376,7 +376,7 @@ const SITUATION_DB = {
       story:"제갈량의 팔진도(八陣圖)에 동오군이 갇혔다. 죽은 제갈량의 진법이 살아있는 적을 가뒀다.",
       question:"혁신적 시스템으로 조직을 강화하는 방법은?",
       options:[
-        { cji:"天", text:"자신이 없어도 작동하는 시스템을 만든다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"자신이 없어도 작동하는 시스템을 만든다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"규칙과 매뉴얼로 지식을 조직화한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"훈련을 통해 시스템을 내재화한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -384,7 +384,7 @@ const SITUATION_DB = {
       story:"마초가 유비에게 귀순했다. 적이었던 자를 아군의 핵심으로 만드는 포용력.",
       question:"귀순한 적장을 효과적으로 활용하는 방법은?",
       options:[
-        { cji:"天", text:"즉각 중요 임무를 주어 신뢰를 보인다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"즉각 중요 임무를 주어 신뢰를 보인다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"단계적으로 신뢰를 쌓으며 권한을 늘린다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"귀순 이유를 파악해 진심을 확인한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:82 },
       ] },
@@ -473,7 +473,7 @@ const SITUATION_DB = {
       story:"황개의 화공선이 불길을 일으키며 조조의 수군을 전소시켰다. 불과 바람이 역사를 바꿨다.",
       question:"결정적 순간에 최적의 전술을 구사하는 방법은?",
       options:[
-        { cji:"天", text:"적의 약점을 정확히 파악하고 집중 공격한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"적의 약점을 정확히 파악하고 집중 공격한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"자연을 활용해 최소 피해로 최대 효과를 낸다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"기습의 시기를 완벽하게 선택한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -481,7 +481,7 @@ const SITUATION_DB = {
       story:"여몽의 계책으로 형주가 함락됐다. 완벽한 기만전술. 예상치 못한 방향의 공격이 가장 강하다.",
       question:"적이 전혀 예상치 못한 곳을 공격하는 방법은?",
       options:[
-        { cji:"天", text:"적의 방어 체계 허점을 철저히 분석한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"적의 방어 체계 허점을 철저히 분석한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"기만전술로 적의 시선을 다른 곳으로 돌린다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"신속하게 움직여 적이 반응할 시간을 주지 않는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -489,7 +489,7 @@ const SITUATION_DB = {
       story:"황충이 정군산에서 하후연을 참수했다. 노장의 결단과 용기. 나이는 전략적 판단을 막지 않는다.",
       question:"나이와 경험이 장점이 될 때는?",
       options:[
-        { cji:"天", text:"경험에서 나오는 판단력을 발휘한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"경험에서 나오는 판단력을 발휘한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"적이 방심하는 순간을 정확히 포착한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"담력과 결단으로 적의 핵심을 친다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -497,7 +497,7 @@ const SITUATION_DB = {
       story:"마초가 조조를 위수까지 몰아붙였다. 천하제일의 기병이 가져온 압도적 기세.",
       question:"기세로 적을 압박하는 방법은?",
       options:[
-        { cji:"天", text:"신속한 이동으로 적이 반응할 틈을 주지 않는다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"신속한 이동으로 적이 반응할 틈을 주지 않는다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"결정적 승리를 연속으로 만들어 사기를 높인다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"적의 핵심 거점을 빠르게 점령한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -505,7 +505,7 @@ const SITUATION_DB = {
       story:"조인이 광릉에서 손권의 군대와 대치했다. 장강이 자연 요새가 되어 위나라를 막았다.",
       question:"지형을 전략적으로 활용하는 방법은?",
       options:[
-        { cji:"天", text:"지형의 특성을 최대한 이용한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"지형의 특성을 최대한 이용한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"적이 지형 이점을 활용하기 전에 선점한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"지형 분석을 바탕으로 전술을 수립한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -513,7 +513,7 @@ const SITUATION_DB = {
       story:"제갈량의 첫 북벌. 가정 패배로 실패했지만 위나라를 공포에 떨게 했다.",
       question:"실패에서 교훈을 얻는 방법은?",
       options:[
-        { cji:"天", text:"패인을 냉철히 분석하고 개선한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
+        { cji:"天", text:"패인을 냉철히 분석하고 개선한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
         { cji:"地", text:"실패한 부분은 과감히 수정한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"성공한 부분은 강화하며 다시 시도한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:82 },
       ] },
@@ -521,7 +521,7 @@ const SITUATION_DB = {
       story:"사마의가 요동의 공손연을 정복했다. 1년 만에 완료한 신속한 원정.",
       question:"신속한 원정으로 완전한 승리를 거두는 방법은?",
       options:[
-        { cji:"天", text:"목표를 명확히 하고 모든 자원을 집중한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"목표를 명확히 하고 모든 자원을 집중한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"예상 기간의 반에 완수를 목표로 한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"항복 조건을 미리 제시해 저항을 최소화한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -529,7 +529,7 @@ const SITUATION_DB = {
       story:"손권이 위나라를 여러 방면에서 견제했다. 제갈량의 북벌을 돕는 양동 작전.",
       question:"동맹의 전략과 연계하는 방법은?",
       options:[
-        { cji:"天", text:"아군의 공격 시기에 맞춰 적을 분산시킨다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"아군의 공격 시기에 맞춰 적을 분산시킨다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"독립적으로 움직이며 서로 보완한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"사전에 세밀한 협력 계획을 수립한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -537,7 +537,7 @@ const SITUATION_DB = {
       story:"제갈량의 2차 북벌. 군량 부족으로 철수했지만 진창 요새를 공략했다.",
       question:"보급이 부족한 원정을 관리하는 방법은?",
       options:[
-        { cji:"天", text:"보급이 가능한 범위 내에서만 작전한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
+        { cji:"天", text:"보급이 가능한 범위 내에서만 작전한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
         { cji:"地", text:"현지 조달을 최대화한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"신속하게 목표를 달성하고 철수한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -545,7 +545,7 @@ const SITUATION_DB = {
       story:"장합이 마속의 약점을 간파하고 수원(水源)을 차단했다. 적의 약점을 정확히 공략하는 것이 전략.",
       question:"적의 핵심 약점을 찾아 공략하는 방법은?",
       options:[
-        { cji:"天", text:"적의 보급과 물자 흐름을 분석한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"적의 보급과 물자 흐름을 분석한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"방어의 빈틈을 정찰로 파악한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"심리적 약점을 이용한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -553,7 +553,7 @@ const SITUATION_DB = {
       story:"손권이 산월족을 완전히 평정하며 후방 안정을 완성했다. 내부 안정 없이 외부 팽창 불가.",
       question:"내부 안정이 외부 팽창의 전제조건인 이유는?",
       options:[
-        { cji:"天", text:"내부 반란은 전방 전투보다 더 위험하다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"내부 반란은 전방 전투보다 더 위험하다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"안정된 후방이 전방 보급의 기반이다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"내부 단결이 전투력의 배가(倍加) 효과를 낸다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -561,7 +561,7 @@ const SITUATION_DB = {
       story:"제갈량의 3차 북벌. 무도·음평 두 군을 차지하며 영토를 넓혔다.",
       question:"영토를 점진적으로 확장하는 방법은?",
       options:[
-        { cji:"天", text:"한 번에 많은 곳보다 확실히 지킬 수 있는 곳만 확보한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"한 번에 많은 곳보다 확실히 지킬 수 있는 곳만 확보한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"점령지 안정화를 완료한 뒤 다음을 노린다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"전략적으로 중요한 거점을 우선 확보한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -569,7 +569,7 @@ const SITUATION_DB = {
       story:"위나라가 동오를 공략했지만 장강에 막혀 실패했다. 자연의 장벽을 극복하는 것이 관건.",
       question:"자연 장벽을 극복하는 방법은?",
       options:[
-        { cji:"天", text:"수군을 양성해 수로를 통해 공략한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
+        { cji:"天", text:"수군을 양성해 수로를 통해 공략한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
         { cji:"地", text:"장벽 우회 경로를 개발한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"내부 이탈자를 이용해 안에서 무너뜨린다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -577,7 +577,7 @@ const SITUATION_DB = {
       story:"제갈량이 다시 기산에서 사마의와 대치했다. 이종의 군량 운반 실패로 또다시 철수.",
       question:"외부 의존도를 줄이는 방법은?",
       options:[
-        { cji:"天", text:"자체 군량 생산 능력을 먼저 키운다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"자체 군량 생산 능력을 먼저 키운다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"보급을 담당할 믿을 수 있는 인재를 선발한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"여러 경로의 보급선을 확보한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -585,7 +585,7 @@ const SITUATION_DB = {
       story:"손권이 요동 공손연과 교류하며 위나라 후방을 위협했다. 우회 전략으로 적의 전력을 분산시킨다.",
       question:"우회 전략으로 적의 전력을 분산시키는 방법은?",
       options:[
-        { cji:"天", text:"적의 후방과 측면을 동시에 위협한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"적의 후방과 측면을 동시에 위협한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"먼 동맹을 통해 적을 사방에서 압박한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"외교로 적의 동맹국을 이탈시킨다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -593,7 +593,7 @@ const SITUATION_DB = {
       story:"제갈량의 마지막 북벌. 오장원에서 사마의와 대치하다 병사했다. 끝까지 포기하지 않는 의지.",
       question:"최후까지 포기하지 않는 정신을 유지하는 방법은?",
       options:[
-        { cji:"天", text:"목표의 의미와 가치를 항상 상기한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"목표의 의미와 가치를 항상 상기한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"작은 성취를 통해 포기하지 않는 이유를 만든다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"동료의 격려로 서로 버팀목이 된다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -601,7 +601,7 @@ const SITUATION_DB = {
       story:"조조가 오환 원정으로 원소 잔당을 완전 제거했다. 끝까지 마무리하는 철저함.",
       question:"시작한 일을 반드시 완수하는 방법은?",
       options:[
-        { cji:"天", text:"중도 포기의 손실을 항상 계산한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"중도 포기의 손실을 항상 계산한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"목표를 작게 나누어 단계적으로 완수한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"완수 후 성과를 명확히 평가한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -609,7 +609,7 @@ const SITUATION_DB = {
       story:"손권이 합비를 다시 공략했지만 또 실패했다. 같은 방법으로 같은 곳을 반복 공략하면 안 된다.",
       question:"반복 실패를 극복하는 방법은?",
       options:[
-        { cji:"天", text:"실패 원인을 분석해 다른 방법을 시도한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
+        { cji:"天", text:"실패 원인을 분석해 다른 방법을 시도한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
         { cji:"地", text:"목표 자체가 옳은지 재검토한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"다른 방향에서 접근해 적의 허를 찌른다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -617,7 +617,7 @@ const SITUATION_DB = {
       story:"강유가 처음으로 북벌을 시작했다. 제갈량의 유지를 이어받아 출정한 첫걸음.",
       question:"스승의 뜻을 이어받아 새로 시작하는 방법은?",
       options:[
-        { cji:"天", text:"스승의 방식을 기반으로 자신만의 색을 더한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
+        { cji:"天", text:"스승의 방식을 기반으로 자신만의 색을 더한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
         { cji:"地", text:"스승의 성공과 실패 모두에서 배운다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"스승보다 나아지려는 목표를 갖는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -625,7 +625,7 @@ const SITUATION_DB = {
       story:"위나라가 세 나라 중 가장 강한 군사력을 유지했다. 강함을 지속시키는 비결.",
       question:"강함을 오래 유지하는 방법은?",
       options:[
-        { cji:"天", text:"혁신을 멈추지 않는다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"혁신을 멈추지 않는다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"내부 결속을 항상 다진다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"적을 절대 과소평가하지 않는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -633,7 +633,7 @@ const SITUATION_DB = {
       story:"강유가 위나라에 계속 도전했다. 국력이 소모되었지만 포기하지 않았다.",
       question:"지속적인 도전의 가치와 한계를 판단하는 방법은?",
       options:[
-        { cji:"天", text:"목표 대비 투입 비용을 냉철히 계산한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
+        { cji:"天", text:"목표 대비 투입 비용을 냉철히 계산한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:82 },
         { cji:"地", text:"동료의 의견을 충분히 듣는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"외부 상황 변화를 놓치지 않는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -641,7 +641,7 @@ const SITUATION_DB = {
       story:"등애가 불가능한 루트로 성도를 기습했다. 불가능을 가능으로 만드는 결단.",
       question:"불가능해 보이는 일을 실행하는 용기는?",
       options:[
-        { cji:"天", text:"먼저 가능성을 확인하고 결단한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"먼저 가능성을 확인하고 결단한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"실패를 두려워하지 않고 도전한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"핵심 인원의 완전한 헌신을 이끌어낸다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -649,7 +649,7 @@ const SITUATION_DB = {
       story:"진나라 수군이 장강을 건너 오나라를 완전히 정복했다. 100년 분열의 종식.",
       question:"최후의 통일 전쟁에서 확실한 승리를 거두는 방법은?",
       options:[
-        { cji:"天", text:"수군을 이용해 강 방어선을 무력화한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"수군을 이용해 강 방어선을 무력화한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"여러 방면의 동시 공격으로 적을 분산시킨다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"내부 투항을 유도해 저항을 최소화한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -727,7 +727,7 @@ const SITUATION_DB = {
       story:"조비가 죽고 조예가 황제에 올랐다. 할아버지 조조, 아버지 조비의 기업을 이어받았다.",
       question:"3대에 걸친 대업을 이어받는 방법은?",
       options:[
-        { cji:"天", text:"앞선 세대의 성취를 기반으로 더 나아간다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"앞선 세대의 성취를 기반으로 더 나아간다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"앞선 세대의 실수를 반복하지 않는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"자신만의 새로운 비전을 만든다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -735,7 +735,7 @@ const SITUATION_DB = {
       story:"유비가 죽으며 유선을 제갈량에게 맡겼다. 제갈량은 유선이 무능해도 끝까지 보좌했다.",
       question:"무능한 군주를 보좌하는 충신의 자세는?",
       options:[
-        { cji:"天", text:"군주의 부족함을 자신의 능력으로 보완한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"군주의 부족함을 자신의 능력으로 보완한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"충성의 대상이 개인이 아닌 대의임을 인식한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"군주가 성장하도록 돕는다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -743,7 +743,7 @@ const SITUATION_DB = {
       story:"제갈량이 죽은 후 사마의가 촉군을 추격했다가 목각인형에 속았다. 죽은 공명이 산 중달을 물리쳤다.",
       question:"심리전으로 적을 제압하는 방법은?",
       options:[
-        { cji:"天", text:"적의 두려움을 이용해 행동을 통제한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"적의 두려움을 이용해 행동을 통제한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"정확한 정보 없이 섣불리 행동하지 않는다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"신화와 명성을 전략적 자산으로 활용한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -751,7 +751,7 @@ const SITUATION_DB = {
       story:"사마씨 집권 이후 위나라 중앙집권이 강화됐다. 권력 집중이 효율을 높이지만 다양성을 줄인다.",
       question:"중앙집권과 분권의 균형을 맞추는 방법은?",
       options:[
-        { cji:"天", text:"핵심 결정은 집중하되 실행은 분권한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
+        { cji:"天", text:"핵심 결정은 집중하되 실행은 분권한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
         { cji:"地", text:"상황에 따라 유연하게 조정한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"제도로 균형을 제도화한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -759,7 +759,7 @@ const SITUATION_DB = {
       story:"태자 분쟁으로 손권의 말년이 혼란스러워졌다. 현명한 자도 후계 문제에서 실수한다.",
       question:"후계 문제를 미리 해결하는 방법은?",
       options:[
-        { cji:"天", text:"일찍 명확히 정하고 교육한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"일찍 명확히 정하고 교육한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"복수 후보를 두되 명확한 기준을 세운다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"신뢰할 수 있는 원로 집단의 합의를 구한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -767,7 +767,7 @@ const SITUATION_DB = {
       story:"강유가 종회를 부추겨 반란을 일으키게 했다. 촉한 재건을 노렸지만 실패했다.",
       question:"마지막 순간의 도박적 전략을 평가하는 방법은?",
       options:[
-        { cji:"天", text:"성공 확률보다 실패 시 결과를 먼저 계산한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
+        { cji:"天", text:"성공 확률보다 실패 시 결과를 먼저 계산한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:85 },
         { cji:"地", text:"도박적 전략은 최후의 수단으로만 쓴다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:82 },
         { cji:"人", text:"다른 모든 방법이 없을 때만 시도한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:80 },
       ] },
@@ -775,7 +775,7 @@ const SITUATION_DB = {
       story:"사마염이 황제에 올라 선정을 베풀었다. 오래된 전쟁 후 백성이 원하는 것은 평화와 안정이다.",
       question:"오랜 혼란 후 평화를 정착시키는 방법은?",
       options:[
-        { cji:"天", text:"백성의 생활 안정을 최우선으로 한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"백성의 생활 안정을 최우선으로 한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"이전 체제의 유능한 인재를 포용한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"새 시대의 비전을 분명히 제시한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -783,7 +783,7 @@ const SITUATION_DB = {
       story:"삼국시대 100년. 조조·유비·손권의 천하 다툼이 결국 사마씨에게 돌아갔다. 역사는 예측할 수 없다.",
       question:"역사에서 진정한 교훈을 얻는 방법은?",
       options:[
-        { cji:"天", text:"승자의 교만보다 패자의 지혜를 배운다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"승자의 교만보다 패자의 지혜를 배운다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"역사를 반복하지 않으려면 끊임없이 배운다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"현재의 선택이 미래를 결정함을 인식한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:95 },
       ] },
@@ -791,7 +791,7 @@ const SITUATION_DB = {
       story:"제갈량이 아들에게 편지를 썼다. '非淡泊無以明志 非寧靜無以致遠(담박하지 않으면 뜻을 밝힐 수 없고 고요하지 않으면 멀리 갈 수 없다).'",
       question:"자녀와 후계자를 교육하는 핵심 원칙은?",
       options:[
-        { cji:"天", text:"뜻을 세우게 한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
+        { cji:"天", text:"뜻을 세우게 한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:95 },
         { cji:"地", text:"절제와 집중력을 기른다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"실제 경험을 통해 성장하게 한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -799,7 +799,7 @@ const SITUATION_DB = {
       story:"조조가 임종 전에 말했다. '나의 수십 년 용병은 천하 영웅들과 다투었다. 그러나 가장 두려웠던 것은 유비와 곽가의 부재였다.'",
       question:"진정한 강자가 두려워하는 것은 무엇인가?",
       options:[
-        { cji:"天", text:"더 뛰어난 전략을 가진 상대", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
+        { cji:"天", text:"더 뛰어난 전략을 가진 상대", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:90 },
         { cji:"地", text:"자신을 가장 잘 아는 책사의 부재", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:92 },
         { cji:"人", text:"민심의 이반", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:88 },
       ] },
@@ -807,7 +807,7 @@ const SITUATION_DB = {
       story:"손권이 임종 전에 남긴 것은 강동의 안정된 외교 체계였다. 한 사람의 외교가 국가를 지킨다.",
       question:"외교 유산을 남기는 방법은?",
       options:[
-        { cji:"天", text:"안정적인 외교 제도를 구축한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"안정적인 외교 제도를 구축한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"차세대 외교 인재를 키운다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:85 },
         { cji:"人", text:"명확한 외교 원칙을 남긴다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:90 },
       ] },
@@ -815,7 +815,7 @@ const SITUATION_DB = {
       story:"100년의 전쟁을 견딘 것은 결국 백성이었다. 영웅들의 역사 뒤에는 이름 없는 백성의 삶이 있다.",
       question:"백성을 위한 진정한 정치를 실현하는 방법은?",
       options:[
-        { cji:"天", text:"백성의 일상에 관심을 갖는다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"백성의 일상에 관심을 갖는다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"백성의 고통을 직접 체험한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:7,intel:10,ops:11,supply:10,military:9}, wisdomScore:88 },
         { cji:"人", text:"백성이 원하는 것을 먼저 한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:95 },
       ] },
@@ -823,7 +823,7 @@ const SITUATION_DB = {
       story:"삼국이 통일되었지만 곧 팔왕의 난이 시작됐다. 역사는 반복된다. 통일도 분열의 씨앗을 품는다.",
       question:"역사의 반복을 방지하는 방법은?",
       options:[
-        { cji:"天", text:"과거의 실수를 기록하고 교육한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
+        { cji:"天", text:"과거의 실수를 기록하고 교육한다", wisdom:"자강불식으로 판단한다", effects:{personnel:11,intel:6,ops:7,supply:7,military:10}, wisdomScore:88 },
         { cji:"地", text:"제도로 반복을 막는 시스템을 만든다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"끊임없이 개혁하며 정체를 방지한다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:10,intel:10,ops:9,supply:8,military:10}, wisdomScore:85 },
       ] },
@@ -831,7 +831,7 @@ const SITUATION_DB = {
       story:"삼국의 모든 영웅이 사라졌다. 영웅이란 무엇인가. 이름보다 그가 남긴 것으로 기억된다.",
       question:"진정한 영웅으로 기억되는 방법은?",
       options:[
-        { cji:"天", text:"세상에 이로운 일을 한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
+        { cji:"天", text:"세상에 이로운 일을 한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:92 },
         { cji:"地", text:"자신보다 더 큰 것을 위해 헌신한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:90 },
         { cji:"人", text:"후세에 교훈이 될 삶을 산다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:95 },
       ] },
@@ -839,7 +839,7 @@ const SITUATION_DB = {
       story:"삼국의 영웅들이 걸어간 길. 세상을 이롭게 하고, 초심을 잃지 않고, 진정성 있는 사람을 모아 천하를 통일하는 것. 그것이 오늘 우리의 사업이기도 하다.",
       question:"삼국지의 교훈을 현실에 적용하는 방법은?",
       options:[
-        { cji:"天", text:"초심을 매일 기억하고 다짐한다", wisdom:"진실한 마음으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:98 },
+        { cji:"天", text:"초심을 매일 기억하고 다짐한다", wisdom:"자강불식으로 판단한다", effects:{personnel:12,intel:7,ops:8,supply:8,military:11}, wisdomScore:98 },
         { cji:"地", text:"진정성 있는 동료를 찾고 함께한다", wisdom:"선한 행동으로 판단한다",   effects:{personnel:8,intel:11,ops:12,supply:11,military:10}, wisdomScore:95 },
         { cji:"人", text:"세상에 이로운 목표를 향해 꾸준히 나아간다", wisdom:"아름다운 삶으로 판단한다", effects:{personnel:11,intel:11,ops:10,supply:9,military:11}, wisdomScore:97 },
       ] },
@@ -1453,7 +1453,7 @@ export default function SamgukjiGame() {
                   <line x1="150" y1="131" x2="48"  y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
                   <text x="86"  y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">☯️</text>
                   <text x="86"  y="98"  textAnchor="middle" fontSize="13" fontWeight="700" fill="#4a90d9" fontFamily="serif">진(眞)</text>
-                  <text x="86"  y="113" textAnchor="middle" fontSize="8.5" fill="#4a90d9" fontFamily="serif" opacity="0.9">진실한 마음</text>
+                  <text x="86"  y="113" textAnchor="middle" fontSize="8.5" fill="#4a90d9" fontFamily="serif" opacity="0.9">자강불식</text>
                   <text x="214" y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">🌾</text>
                   <text x="214" y="98"  textAnchor="middle" fontSize="13" fontWeight="700" fill="#7ab040" fontFamily="serif">선(善)</text>
                   <text x="214" y="113" textAnchor="middle" fontSize="8.5" fill="#7ab040" fontFamily="serif" opacity="0.9">선한 행동</text>
