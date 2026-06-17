@@ -912,6 +912,8 @@ const POINT_RULES = {
 function getRank(p){ const v=Math.max(0,p); return LEGEND_RANKS.find(r=>v>=r.min&&v<=r.max)||LEGEND_RANKS[LEGEND_RANKS.length-1]; }
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 function loadLegendData(){ try{ const r=localStorage.getItem(STORAGE_KEY); if(r) return JSON.parse(r); }catch(e){} return null; }
+function loadGameState(){ try{ const r=localStorage.getItem('samgukji-gamestate'); if(r) return JSON.parse(r); }catch(e){} return null; }
+function saveGameState(d){ try{ localStorage.setItem('samgukji-gamestate',JSON.stringify(d)); }catch(e){} }
 function saveLegendData(d){ try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(d)); }catch(e){} }
 function initLegendData(){ return {points:0,totalPoints:0,streak:0,lastVisit:null,lastVisitDate:null,situationsAnswered:0,totalWisdom:0,joinedAt:Date.now(),log:[]}; }
 
@@ -1071,10 +1073,11 @@ function HeroBackground() {
 // ── 메인 컴포넌트 ───────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════
 export default function SamgukjiGame() {
-  const [phase, setPhase]         = useState("intro");   // intro|lord|game|result
-  const [lord, setLord]           = useState(null);
-  const [phaseIdx, setPhaseIdx]   = useState(0);         // 0~3 단계
-  const [usedIds, setUsedIds]     = useState([]);        // 사용된 상황 ID
+  const _gs = (() => { try { const s = loadGameState(); return s || {}; } catch(e) { return {}; } })();
+  const [phase, setPhase]         = useState(_gs.phase && _gs.phase !== "intro" ? _gs.phase : "intro");
+  const [lord, setLord]           = useState(_gs.lord || null);
+  const [phaseIdx, setPhaseIdx]   = useState(_gs.phaseIdx || 0);
+  const [usedIds, setUsedIds]     = useState(_gs.usedIds || []);        // 사용된 상황 ID
   const [situation, setSituation] = useState(null);      // 현재 상황
   const [chosen, setChosen]       = useState(null);      // 선택한 옵션
   const [commentary, setCommentary] = useState("");      // AI 해설
@@ -1082,15 +1085,15 @@ export default function SamgukjiGame() {
   const [showResult, setShowResult] = useState(false);   // 선택 결과 표시
   const [bizAnalogy, setBizAnalogy]   = useState("");      // 창업 비유 한 줄
   // 군사력 지표
-  const [milStats, setMilStats]   = useState({ personnel:50, intel:50, ops:50, supply:50, military:50 });
+  const [milStats, setMilStats]   = useState(_gs.milStats || { personnel:50, intel:50, ops:50, supply:50, military:50 });
   const [statDeltas, setStatDeltas] = useState(null);    // 방금 변화한 델타
   // 영구 포인트
   const [legend, setLegend]       = useState(null);
   const [pointAnim, setPointAnim] = useState(null);
   const [showLegend, setShowLegend] = useState(false);
   // 게임 통계
-  const [roundCount, setRoundCount] = useState(0);
-  const [totalWisdom, setTotalWisdom] = useState(0);
+  const [roundCount, setRoundCount] = useState(_gs.roundCount || 0);
+  const [totalWisdom, setTotalWisdom] = useState(_gs.totalWisdom || 0);
   const [phaseCount, setPhaseCount] = useState({0:0,1:0,2:0,3:0}); // 단계별 상황 수
   const [customEmojis, setCustomEmojis] = useState(() => {       // 사용자 커스텀 이모지
     try { const s = localStorage.getItem('samgukji-emojis'); return s ? JSON.parse(s) : {}; } catch { return {}; }
@@ -1135,6 +1138,12 @@ export default function SamgukjiGame() {
     setPointAnim({delta,reason});
     setTimeout(()=>setPointAnim(null),3000);
   }
+
+  // ── 게임 상태 자동 저장
+  useEffect(()=>{
+    if(phase === "intro") return;
+    saveGameState({ phase, lord, phaseIdx, usedIds, milStats, roundCount, totalWisdom });
+  },[phase, lord, phaseIdx, milStats, roundCount]);
 
   // ── 상황 선택: 4단계 순환, 랜덤
   function pickSituation(pIdx, used){
