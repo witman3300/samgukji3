@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import HanjaBattle from "./HanjaBattle";
 
 // ══════════════════════════════════════════════════════════════════
 // ── 진선미 철학 v2 ────────────────────────────────────────────────────
@@ -1073,6 +1074,10 @@ function HeroBackground() {
 // ── 메인 컴포넌트 ───────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════
 export default function SamgukjiGame() {
+  const [gameMode, setGameMode]   = useState('strategy'); // 'strategy' | 'hanja'
+
+  if(gameMode === 'hanja') return <HanjaBattle onBack={()=>setGameMode('strategy')}/>;
+
   const _gs = (() => { try { const s = loadGameState(); return s || {}; } catch(e) { return {}; } })();
   const [phase, setPhase]         = useState(_gs.phase && _gs.phase !== "intro" ? _gs.phase : "intro");
   const [lord, setLord]           = useState(_gs.lord || null);
@@ -1502,7 +1507,8 @@ export default function SamgukjiGame() {
                   </div>
                 </button>
               )}
-              <button style={{...btn(),width:"100%",fontSize:18,padding:"16px",letterSpacing:"0.15em"}} onClick={()=>setPhase("lord")}>⚔ 군주를 선택하라</button>
+              <button style={{...btn(),width:"100%",fontSize:18,padding:"16px",letterSpacing:"0.15em",marginBottom:8}} onClick={()=>setPhase("lord")}>⚔ 군주를 선택하라</button>
+              <button style={{...btn("rgba(200,80,40,0.85)","#fff"),width:"100%",fontSize:16,padding:"13px",letterSpacing:"0.1em",border:"1px solid rgba(220,100,60,0.6)"}} onClick={()=>setGameMode('hanja')}>🀄 한자 전투 모드 — 적장을 털어라!</button>
             </div>
           </div>
         )}
