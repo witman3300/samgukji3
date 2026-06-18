@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
+    "postbuild": "node -e \"const fs=require('fs');fs.copyFileSync('index.html','dist/index.html');console.log('index.html → dist/index.html');\"",
     "deploy": "gh-pages -d dist"
   },
   "homepage": "https://samgukji.ai.kr",
