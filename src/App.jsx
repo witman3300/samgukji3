@@ -1631,7 +1631,7 @@ export default function SamgukjiGame() {
                 <div style={{fontSize:18,lineHeight:2.1,color:"#d4c49a",marginBottom:14,letterSpacing:"0.03em"}}>{situation.story}</div>
                 <div style={{fontSize:15,fontWeight:700,color:G.gold,marginBottom:10,textAlign:"center",letterSpacing:"0.1em"}}>— {situation.question} —</div>
 
-                {situation.options.map((opt,i)=>{
+                {[...situation.options].sort((a,b)=>{const o={天:0,地:1,人:2};return(o[a.cji]??2)-(o[b.cji]??2);}).map((opt,i)=>{
                   const cjiInfo = CHEONJIIN.find(c=>c.key===(opt.cji==="天"?"cheon":opt.cji==="地"?"ji":"in"));
                   return(
                     <button key={i} className={!chosen?"opt":""} onClick={()=>handleChoice(opt)} style={{
