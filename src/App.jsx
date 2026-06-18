@@ -1105,12 +1105,7 @@ export default function SamgukjiGame() {
   const [adminPwInput, setAdminPwInput]     = useState("");
   const [adminError, setAdminError]         = useState("");
 
-  // ── 서비스워커 등록 (PWA)
-  useEffect(()=>{
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('/sw.js').catch(()=>{});
-    }
-  },[]);
+
 
   // ── 초기 로드
   useEffect(()=>{
