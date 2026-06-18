@@ -1480,9 +1480,10 @@ export default function SamgukjiGame() {
                   <circle cx="150" cy="131" r="2.5" fill="#c8a030" opacity="0.95"/>
                 </svg>
                 <div style={{fontSize:16,color:G.dim,lineHeight:2,marginTop:14}}>
-                  漢室이 기울고 군웅이 일어서다.<br/>
+                  세상이 요지경이다.<br/>
                   <span style={{color:G.gold}}>세상을 이롭게</span> 할 뜻을 품고 <span style={{color:"#4a90d9"}}>초심을 잃지 않는</span> 자,<br/>
-                  <span style={{color:"#7ab040"}}>진정성 있는 사람</span>을 모아 마침내 <span style={{color:G.goldL,fontWeight:700}}>천하를 통일하라!</span>
+                  하늘의 氣를 받고 글(한자)의 도(道)를 익히고<br/>
+                  <span style={{color:"#7ab040"}}>진정성있고 용맹한 사람</span>을 모아 마침내 <span style={{color:G.goldL,fontWeight:700}}>천하를 얻으리라!</span>
                 </div>
               </div>
               <div style={{display:"flex",gap:8,marginBottom:12,flexWrap:"wrap"}}>
