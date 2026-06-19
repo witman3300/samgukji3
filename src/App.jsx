@@ -1077,7 +1077,7 @@ export default function SamgukjiGame() {
   const [gameMode, setGameMode]   = useState('strategy'); // 'strategy' | 'hanja'
 
   const _gs = (() => { try { const s = loadGameState(); return s || {}; } catch(e) { return {}; } })();
-  const [phase, setPhase]         = useState(_gs.phase && _gs.phase !== "intro" ? _gs.phase : "intro");
+  const [phase, setPhase]         = useState(_gs.phase && _gs.phase !== "intro" && _gs.phase !== "game" ? _gs.phase : "intro");
   const [lord, setLord]           = useState(_gs.lord || null);
   const [phaseIdx, setPhaseIdx]   = useState(_gs.phaseIdx || 0);
   const [usedIds, setUsedIds]     = useState(_gs.usedIds || []);        // 사용된 상황 ID
