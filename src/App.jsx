@@ -1453,63 +1453,74 @@ export default function SamgukjiGame() {
 
         {/* ── INTRO ── */}
         {phase==="intro"&&(
-          <div className="fade">
-            <HeroBackground/>
-            <div style={{padding:"0 16px"}}>
-              <div style={box({textAlign:"center",padding:"20px 16px"})}>
-                <div style={{fontSize:14,color:G.dim,letterSpacing:"0.2em",marginBottom:12}}>◈ 진선미(眞善美)</div>
-                <svg viewBox="0 0 300 262" style={{width:"100%",maxWidth:"300px",display:"block",margin:"0 auto"}}>
-                  <polygon points="150,13 252,72 252,190 150,249 48,190 48,72" fill="rgba(8,5,2,0.96)"/>
-                  <polygon points="150,131 48,190 48,72 150,13" fill="rgba(74,144,217,0.28)" stroke="#4a90d9" strokeWidth="1.5"/>
-                  <polygon points="150,131 150,13 252,72 252,190" fill="rgba(122,176,64,0.28)" stroke="#7ab040" strokeWidth="1.5"/>
-                  <polygon points="150,131 252,190 150,249 48,190" fill="rgba(200,160,48,0.28)" stroke="#c8a030" strokeWidth="1.5"/>
-                  <polygon points="150,13 252,72 252,190 150,249 48,190 48,72" fill="none" stroke="rgba(200,160,40,0.9)" strokeWidth="2.5"/>
-                  <defs><filter id="tGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-                   <line x1="150" y1="131" x2="252" y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
-                  <line x1="150" y1="131" x2="48"  y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
-                  <text x="86"  y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">☯️</text>
-                  <text x="86"  y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">진(眞)</text>
-                  <text x="86"  y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">자강불식</text>
-                  <text x="214" y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">🌾</text>
-                  <text x="214" y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#8edd50" fontFamily="Noto Serif KR,serif">선(善)</text>
-                  <text x="214" y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#8edd50" fontFamily="Noto Serif KR,serif">계지자선</text>
-                  <text x="150" y="170" textAnchor="middle" fontSize="22" dominantBaseline="middle">👥</text>
-                  <text x="150" y="196" textAnchor="middle" fontSize="20" fontWeight="900" fill="#f0c840" fontFamily="Noto Serif KR,serif">미(美)</text>
-                  <text x="150" y="214" textAnchor="middle" fontSize="12" fontWeight="700" fill="#f0c840" fontFamily="Noto Serif KR,serif">교이만물</text>
-                  <circle cx="150" cy="131" r="6" fill="rgba(200,160,40,0.15)" stroke="rgba(200,160,40,0.8)" strokeWidth="1.5"/>
-                  <circle cx="150" cy="131" r="2.5" fill="#c8a030" opacity="0.95"/>
-                </svg>
-                <div style={{fontSize:16,color:G.dim,lineHeight:2,marginTop:14}}>
-                  세상이 요지경이다.<br/>
-                  <span style={{color:G.gold}}>세상을 이롭게</span> 할 뜻을 품고 <span style={{color:"#4a90d9"}}>초심을 잃지 않는</span> 자,<br/>
-                  하늘의 氣를 받고 글(한자)의 도(道)를 익히고<br/>
-                  <span style={{color:"#7ab040"}}>진정성있고 용맹한 사람</span>을 모아 마침내 <span style={{color:G.goldL,fontWeight:700}}>천하를 얻으리라!</span>
+          <div className="fade" style={{padding:"0 16px"}}>
+            {/* 타이틀 */}
+            <div style={{textAlign:"center",padding:"24px 0 16px"}}>
+              <div style={{fontSize:13,color:G.dim,letterSpacing:"0.3em",marginBottom:6}}>◈ 天下統一 · 삼국지 AI 무한 전략 시뮬레이션</div>
+              <div style={{fontSize:28,fontWeight:900,color:"#f5d050",letterSpacing:"0.18em",textShadow:"0 0 24px rgba(240,200,60,0.5)",marginBottom:4}}>天下統一</div>
+              <div style={{fontSize:15,color:G.text,lineHeight:1.75}}>
+                세상이 요지경이다. <span style={{color:G.gold}}>세상을 이롭게</span> 할 뜻을 품고<br/>
+                하늘의 氣를 받고 글(한자)의 도(道)를 익히고<br/>
+                <span style={{color:"#7ab040"}}>진정성있고 용맹한 사람</span>을 모아 마침내 <span style={{color:G.goldL,fontWeight:700}}>천하를 얻으리라!</span>
+              </div>
+            </div>
+
+            {/* CTA 버튼 — 즉시 보이는 위치 */}
+            {legend&&(
+              <button onClick={()=>setShowLegend(v=>!v)} style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",background:`${getRank(legend.points).color}12`,border:`1px solid ${getRank(legend.points).color}44`,borderRadius:6,padding:"10px 14px",cursor:"pointer",fontFamily:"inherit",marginBottom:10}}>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <StarBadge points={legend.points} customEmojis={customEmojis}/>
+                  <RankBadge points={legend.points} fontSize={17}/>
                 </div>
-              </div>
-              <div style={{display:"flex",gap:8,marginBottom:12,flexWrap:"wrap"}}>
-                {[["입지(立志)","🌅","뜻을 세워라"],["취인(聚人)","👥","사람을 모아라"],["척토(拓土)","🗺️","영토를 넓혀라"],["일통(一統)","👑","천하를 통일하라"]].map(([n,e,d])=>(
-                  <div key={n} style={{flex:"1 1 120px",...box({padding:"10px 8px",textAlign:"center",marginBottom:0})}}>
-                    <div style={{fontSize:19,marginBottom:2}}>{e}</div>
-                    <div style={{fontSize:14,color:G.gold}}>{n}</div>
-                    <div style={{fontSize:13,color:G.dim}}>{d}</div>
-                  </div>
-                ))}
-              </div>
-              {/* 전설 포인트 — 인트로 */}
-              {legend&&(
-                <button onClick={()=>setShowLegend(v=>!v)} style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",background:`${getRank(legend.points).color}12`,border:`1px solid ${getRank(legend.points).color}44`,borderRadius:6,padding:"10px 14px",cursor:"pointer",fontFamily:"inherit",marginBottom:10}}>
-                  <div style={{display:"flex",alignItems:"center",gap:10}}>
-                    <StarBadge points={legend.points} customEmojis={customEmojis}/>
-                    <RankBadge points={legend.points} fontSize={17}/>
-                  </div>
-                  <div style={{display:"flex",alignItems:"center",gap:12}}>
-                    <span style={{fontSize:16,color:"#f0d060",fontWeight:700}}>{(legend.points||0).toLocaleString()}pt</span>
-                    <span style={{fontSize:13,color:"rgba(220,200,150,0.5)"}}>▼ 기록 보기</span>
-                  </div>
-                </button>
-              )}
-              <button style={{...btn(),width:"100%",fontSize:18,padding:"16px",letterSpacing:"0.15em",marginBottom:8}} onClick={()=>setPhase("lord")}>⚔ 군주를 선택하라</button>
-              <button style={{...btn("rgba(200,80,40,0.85)","#fff"),width:"100%",fontSize:16,padding:"13px",letterSpacing:"0.1em",border:"1px solid rgba(220,100,60,0.6)"}} onClick={()=>setGameMode('hanja')}>🀄 한자 전투 모드 — 적장을 털어라!</button>
+                <div style={{display:"flex",alignItems:"center",gap:12}}>
+                  <span style={{fontSize:16,color:"#f0d060",fontWeight:700}}>{(legend.points||0).toLocaleString()}pt</span>
+                  <span style={{fontSize:13,color:"rgba(220,200,150,0.5)"}}>▼ 기록 보기</span>
+                </div>
+              </button>
+            )}
+            <button style={{...btn(),width:"100%",fontSize:18,padding:"16px",letterSpacing:"0.15em",marginBottom:8}} onClick={()=>setPhase("lord")}>⚔ 군주를 선택하라</button>
+            <button style={{...btn("rgba(200,80,40,0.85)","#fff"),width:"100%",fontSize:16,padding:"13px",letterSpacing:"0.1em",border:"1px solid rgba(220,100,60,0.6)",marginBottom:14}} onClick={()=>setGameMode('hanja')}>🀄 한자 전투 모드 — 적장을 털어라!</button>
+
+            {/* 단계 안내 카드 */}
+            <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+              {[["입지(立志)","🌅","뜻을 세워라"],["취인(聚人)","👥","사람을 모아라"],["척토(拓土)","🗺️","영토를 넓혀라"],["일통(一統)","👑","천하를 통일하라"]].map(([n,e,d])=>(
+                <div key={n} style={{flex:"1 1 120px",...box({padding:"10px 8px",textAlign:"center",marginBottom:0})}}>
+                  <div style={{fontSize:19,marginBottom:2}}>{e}</div>
+                  <div style={{fontSize:14,color:G.gold}}>{n}</div>
+                  <div style={{fontSize:13,color:G.dim}}>{d}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* 진선미 + 지도 — 스크롤 후 장식 */}
+            <div style={box({textAlign:"center",padding:"16px",marginBottom:12})}>
+              <div style={{fontSize:13,color:G.dim,letterSpacing:"0.2em",marginBottom:10}}>◈ 진선미(眞善美)</div>
+              <svg viewBox="0 0 300 262" style={{width:"100%",maxWidth:"260px",display:"block",margin:"0 auto"}}>
+                <polygon points="150,13 252,72 252,190 150,249 48,190 48,72" fill="rgba(8,5,2,0.96)"/>
+                <polygon points="150,131 48,190 48,72 150,13" fill="rgba(74,144,217,0.28)" stroke="#4a90d9" strokeWidth="1.5"/>
+                <polygon points="150,131 150,13 252,72 252,190" fill="rgba(122,176,64,0.28)" stroke="#7ab040" strokeWidth="1.5"/>
+                <polygon points="150,131 252,190 150,249 48,190" fill="rgba(200,160,48,0.28)" stroke="#c8a030" strokeWidth="1.5"/>
+                <polygon points="150,13 252,72 252,190 150,249 48,190 48,72" fill="none" stroke="rgba(200,160,40,0.9)" strokeWidth="2.5"/>
+                <defs><filter id="tGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+                <line x1="150" y1="131" x2="252" y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
+                <line x1="150" y1="131" x2="48"  y2="190" stroke="rgba(200,160,40,0.35)" strokeWidth="1"/>
+                <text x="86"  y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">☯️</text>
+                <text x="86"  y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">진(眞)</text>
+                <text x="86"  y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#6ab4ff" fontFamily="Noto Serif KR,serif">자강불식</text>
+                <text x="214" y="74"  textAnchor="middle" fontSize="22" dominantBaseline="middle">🌾</text>
+                <text x="214" y="98"  textAnchor="middle" fontSize="20" fontWeight="900" fill="#8edd50" fontFamily="Noto Serif KR,serif">선(善)</text>
+                <text x="214" y="116" textAnchor="middle" fontSize="12" fontWeight="700" fill="#8edd50" fontFamily="Noto Serif KR,serif">계지자선</text>
+                <text x="150" y="170" textAnchor="middle" fontSize="22" dominantBaseline="middle">👥</text>
+                <text x="150" y="196" textAnchor="middle" fontSize="20" fontWeight="900" fill="#f0c840" fontFamily="Noto Serif KR,serif">미(美)</text>
+                <text x="150" y="214" textAnchor="middle" fontSize="12" fontWeight="700" fill="#f0c840" fontFamily="Noto Serif KR,serif">교이만물</text>
+                <circle cx="150" cy="131" r="6" fill="rgba(200,160,40,0.15)" stroke="rgba(200,160,40,0.8)" strokeWidth="1.5"/>
+                <circle cx="150" cy="131" r="2.5" fill="#c8a030" opacity="0.95"/>
+              </svg>
+            </div>
+
+            {/* 지도 배경 — 장식 */}
+            <div style={{borderRadius:6,overflow:"hidden",marginBottom:12,opacity:0.85}}>
+              <HeroBackground/>
             </div>
           </div>
         )}
