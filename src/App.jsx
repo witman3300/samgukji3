@@ -1517,21 +1517,21 @@ export default function SamgukjiGame() {
         {/* ── LORD SELECT ── */}
         {phase==="lord"&&(
           <div className="fade" style={{padding:"16px 16px 0"}}>
-            <div style={{textAlign:"center",marginBottom:14}}>
-              <div style={{fontSize:19,fontWeight:700,color:G.gold,letterSpacing:"0.1em",marginBottom:3}}>어떤 뜻을 품고 천하에 나설 것인가</div>
-              <div style={{fontSize:14,color:G.dim}}>군주의 특성이 AI 해설에 반영됩니다</div>
+            <div style={{textAlign:"center",marginBottom:16}}>
+              <div style={{fontSize:23,fontWeight:900,color:"#f5d050",letterSpacing:"0.1em",marginBottom:5,textShadow:"0 0 18px rgba(240,200,60,0.45)"}}>어떤 뜻을 품고 천하에 나설 것인가</div>
+              <div style={{fontSize:15,color:"rgba(230,205,130,0.85)",fontWeight:600}}>군주의 특성이 AI 해설에 반영됩니다</div>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(190px,1fr))",gap:10,marginBottom:14}}>
               {LORDS.map(l=>(
-                <div key={l.id} className="lc" style={{background:lord?.id===l.id?`${l.color}15`:"rgba(255,255,255,0.02)",border:`2px solid ${lord?.id===l.id?l.color:G.border}`,borderRadius:5,padding:"14px 12px",cursor:"pointer",textAlign:"center",transition:"all 0.2s",transform:lord?.id===l.id?"translateY(-3px)":"none"}} onClick={()=>setLord(l)}>
-                  <div style={{fontSize:32,marginBottom:4}}>{l.emoji}</div>
-                  <div style={{fontSize:17,fontWeight:700,color:l.color,marginBottom:1}}>{l.name}</div>
-                  <div style={{fontSize:13,color:"rgba(200,168,75,0.5)",letterSpacing:"0.12em",marginBottom:5}}>{l.hanja} · {l.title}</div>
-                  <div style={{fontSize:13,color:G.dim,fontStyle:"italic",lineHeight:1.6,marginBottom:6}}>"{l.creed}"</div>
-                  {[["덕망",l.stat.virtue,"#c85030"],["지략",l.stat.strategy,"#3060a8"],["무력",l.stat.force,"#308050"]].map(([lb,v,c])=>(
-                    <div key={lb} style={{marginBottom:3}}>
-                      <div style={{display:"flex",justifyContent:"space-between",fontSize:13,color:G.dim,marginBottom:1}}><span>{lb}</span><span>{v}</span></div>
-                      <div style={barTrack}><div style={bar(v,c)}/></div>
+                <div key={l.id} className="lc" style={{background:lord?.id===l.id?`${l.color}22`:"rgba(255,255,255,0.06)",border:`2px solid ${lord?.id===l.id?l.color:"rgba(200,155,45,0.45)"}`,borderRadius:6,padding:"16px 13px",cursor:"pointer",textAlign:"center",transition:"all 0.2s",transform:lord?.id===l.id?"translateY(-3px)":"none"}} onClick={()=>setLord(l)}>
+                  <div style={{fontSize:34,marginBottom:6}}>{l.emoji}</div>
+                  <div style={{fontSize:20,fontWeight:900,color:l.color,marginBottom:2,textShadow:`0 0 10px ${l.color}66`}}>{l.name}</div>
+                  <div style={{fontSize:14,color:"rgba(245,215,80,0.92)",letterSpacing:"0.12em",marginBottom:6,fontWeight:700}}>{l.hanja} · {l.title}</div>
+                  <div style={{fontSize:13,color:"rgba(230,210,165,0.88)",fontStyle:"italic",lineHeight:1.65,marginBottom:8}}>"{l.creed}"</div>
+                  {[["덕망",l.stat.virtue,"#e06844"],["지략",l.stat.strategy,"#4888d8"],["무력",l.stat.force,"#42b068"]].map(([lb,v,c])=>(
+                    <div key={lb} style={{marginBottom:4}}>
+                      <div style={{display:"flex",justifyContent:"space-between",fontSize:13,color:"rgba(220,200,155,0.9)",fontWeight:700,marginBottom:2}}><span>{lb}</span><span style={{color:c}}>{v}</span></div>
+                      <div style={{...barTrack,height:7}}><div style={bar(v,c)}/></div>
                     </div>
                   ))}
                 </div>
@@ -1539,9 +1539,9 @@ export default function SamgukjiGame() {
             </div>
             {lord&&(
               <div className="fade">
-                <div style={box({padding:"11px 13px",marginBottom:10,borderColor:`${lord.color}55`})}>
-                  <div style={{fontSize:14,color:G.dim,lineHeight:1.8}}>{lord.profile}</div>
-                  <div style={{fontSize:13,color:"rgba(200,168,75,0.5)",marginTop:5}}>동료: {lord.allies} | 라이벌: {lord.rivals}</div>
+                <div style={box({padding:"13px 15px",marginBottom:10,borderColor:`${lord.color}66`})}>
+                  <div style={{fontSize:14,color:"rgba(225,205,160,0.92)",lineHeight:1.85,fontWeight:500}}>{lord.profile}</div>
+                  <div style={{fontSize:13,color:"rgba(240,210,90,0.8)",marginTop:6,fontWeight:600}}>동료: {lord.allies} | 라이벌: {lord.rivals}</div>
                 </div>
                 <button style={{...btn(lord.color,"#fff"),width:"100%",fontSize:17,letterSpacing:"0.1em"}} onClick={()=>startGame(lord)}>
                   {lord.emoji} {lord.name}의 기치를 세운다 ⚔
