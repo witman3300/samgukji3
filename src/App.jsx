@@ -1076,8 +1076,6 @@ function HeroBackground() {
 export default function SamgukjiGame() {
   const [gameMode, setGameMode]   = useState('strategy'); // 'strategy' | 'hanja'
 
-  if(gameMode === 'hanja') return <HanjaBattle onBack={()=>setGameMode('strategy')}/>;
-
   const _gs = (() => { try { const s = loadGameState(); return s || {}; } catch(e) { return {}; } })();
   const [phase, setPhase]         = useState(_gs.phase && _gs.phase !== "intro" ? _gs.phase : "intro");
   const [lord, setLord]           = useState(_gs.lord || null);
@@ -1272,6 +1270,8 @@ export default function SamgukjiGame() {
   const phaseEmojis=["🌅","👥","🗺️","👑"];
   const totalMil = Object.values(milStats).reduce((a,b)=>a+b,0);
   const avgWisdom = roundCount>0 ? Math.round(totalWisdom/roundCount) : 0;
+
+  if(gameMode === 'hanja') return <HanjaBattle onBack={()=>setGameMode('strategy')}/>;
 
   return (
     <div style={{minHeight:"100vh",background:"radial-gradient(ellipse at 15% 10%, #120804 0%, #080604 50%, #060810 100%)",color:G.text,fontFamily:"'Noto Serif KR',Georgia,serif",position:"relative",overflow:"hidden"}}>
