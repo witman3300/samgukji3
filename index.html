@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>천하통일 — 삼국지 AI 전략 시뮬레이션</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --gold:    #C8922A;
+  --gold-lt: #F5C842;
+  --gold-dk: #7A5010;
+  --red:     #8B1A1A;
+  --red-br:  #C0392B;
+  --green:   #1a6b1a;
+  --blue:    #1a3a8b;
+  --ink:     #0D0900;
+  --parch:   #F5EDD8;
+  --ember:   #FF6B1A;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--ink); font-family: 'Noto Serif KR', serif; color: var(--parch); overflow-x: hidden; }
+
+/* ══════════════════════════════
+   PARTICLES
+══════════════════════════════ */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.spark {
+  position: absolute;
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+  opacity: 0;
+}
+@keyframes floatUp {
+  0%   { opacity: 0; transform: translateY(0) scale(1); }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-100vh) scale(0.3); }
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 배경 레이어 1: 전장 분위기 그라디언트 */
+.bg-base {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 70% 30%, rgba(180,60,10,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 20% 60%, rgba(20,90,20,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 45% at 85% 65%, rgba(10,30,120,0.38) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 80% at 50% 50%, rgba(60,25,5,0.6) 0%, transparent 70%),
+    linear-gradient(160deg, #1a0800 0%, #0D0900 60%, #080510 100%);
+  z-index: 1;
+}
+
+/* 배경 레이어 2: 화염 효과 */
+.bg-fire {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 30% 20% at 60% 25%, rgba(255,100,20,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 15% 10% at 75% 40%, rgba(255,150,30,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse 20% 15% at 45% 35%, rgba(200,80,10,0.18) 0%, transparent 50%);
+  z-index: 2;
+  animation: flickerFire 4s ease-in-out infinite alternate;
+}
+@keyframes flickerFire {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* 배경 레이어 3: 산맥 실루엣 */
+.bg-mountains {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  z-index: 3;
+  background:
+    /* 원거리 산 */
+    radial-gradient(ellipse 20% 30% at 5% 100%, #0f0800 0%, transparent 60%),
+    radial-gradient(ellipse 25% 35% at 18% 100%, #120a00 0%, transparent 55%),
+    radial-gradient(ellipse 15% 25% at 85% 100%, #0e0700 0%, transparent 55%),
+    radial-gradient(ellipse 20% 30% at 95% 100%, #100900 0%, transparent 60%);
+}
+
+/* 안개 */
+.fog-layer {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(13,9,0,0.95) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% -10%, rgba(13,9,0,0.7) 0%, transparent 45%),
+    radial-gradient(ellipse at 0% 50%, rgba(13,9,0,0.5) 0%, transparent 40%),
+    radial-gradient(ellipse at 100% 50%, rgba(13,9,0,0.5) 0%, transparent 40%);
+  z-index: 4;
+}
+
+/* 황금 테두리 장식 */
+.border-frame {
+  position: absolute; inset: 16px;
+  border: 1px solid rgba(200,146,42,0.3);
+  z-index: 10;
+  pointer-events: none;
+}
+.border-frame::before {
+  content: '';
+  position: absolute; inset: 5px;
+  border: 1px solid rgba(200,146,42,0.12);
+}
+.corner-deco {
+  position: absolute; width: 48px; height: 48px;
+  border-color: var(--gold); border-style: solid; opacity: 0.8; z-index: 11; pointer-events: none;
+}
+.corner-deco.tl { top:12px; left:12px; border-width:2px 0 0 2px; }
+.corner-deco.tr { top:12px; right:12px; border-width:2px 2px 0 0; }
+.corner-deco.bl { bottom:12px; left:12px; border-width:0 0 2px 2px; }
+.corner-deco.br { bottom:12px; right:12px; border-width:0 2px 2px 0; }
+
+/* 상단 금선 */
+.top-line {
+  position: absolute; top:0; left:0; right:0; height:4px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-dk) 20%, var(--gold-lt) 50%, var(--gold-dk) 80%, transparent 100%);
+  z-index: 12;
+}
+
+/* ── 중앙 콘텐츠 ── */
+.hero-content {
+  position: relative; z-index: 20;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 0 20px;
+}
+
+/* 상단 배지 */
+.era-badge {
+  display: inline-flex; align-items: center; gap: 12px;
+  border: 1px solid rgba(200,146,42,0.35);
+  padding: 7px 24px;
+  font-size: 11px; letter-spacing: 0.4em;
+  color: var(--gold-lt);
+  background: rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+  animation: fadeIn 1s ease both;
+}
+.era-badge .dot { width:5px; height:5px; background:var(--gold); border-radius:50%; }
+
+/* 불꽃 이펙트 타이틀 */
+.fire-title-wrap {
+  position: relative;
+  margin-bottom: 8px;
+  animation: fadeIn 1s 0.2s ease both;
+}
+.fire-glow {
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(ellipse at 50% 60%, rgba(255,100,20,0.3) 0%, transparent 65%);
+  pointer-events: none;
+  animation: fireGlow 3s ease-in-out infinite alternate;
+}
+@keyframes fireGlow {
+  0%   { opacity: 0.5; transform: scale(0.95); }
+  100% { opacity: 1;   transform: scale(1.05); }
+}
+
+.main-title-cn {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(64px, 12vw, 130px);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  background: linear-gradient(170deg, #fff5cc 0%, var(--gold-lt) 35%, var(--gold) 60%, #a06010 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 40px rgba(200,146,42,0.6)) drop-shadow(0 4px 8px rgba(0,0,0,0.8));
+}
+
+.sub-title {
+  font-size: clamp(12px, 2vw, 16px);
+  letter-spacing: 0.5em;
+  color: rgba(245,237,216,0.65);
+  font-weight: 400;
+  margin-bottom: 4px;
+  animation: fadeIn 1s 0.1s ease both;
+}
+
+/* 삼선 구분자 */
+.triple-divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin: 20px 0 24px;
+  animation: fadeIn 1s 0.3s ease both;
+}
+.triple-divider .line { width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.triple-divider .line.r { background: linear-gradient(90deg, var(--gold), transparent); }
+.triple-divider .diamond { font-size: 10px; color: var(--gold); letter-spacing: 4px; }
+
+/* 세력 상징 */
+.kingdom-symbols {
+  display: flex; gap: 28px; margin-bottom: 32px;
+  animation: fadeIn 1s 0.35s ease both;
+}
+.ks {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; transition: all 0.3s;
+}
+.ks:hover { transform: translateY(-4px) scale(1.08); }
+.ks-char {
+  font-family: 'Ma Shan Zheng', serif;
+  font-size: 38px; line-height: 1;
+  padding: 12px 16px;
+  border: 1px solid;
+  background: rgba(0,0,0,0.5);
+  transition: all 0.3s;
+}
+.ks.wei .ks-char { color:#e05555; border-color:rgba(200,50,50,0.5); }
+.ks.shu .ks-char { color:#55cc55; border-color:rgba(50,180,50,0.5); }
+.ks.wu  .ks-char { color:#5599ee; border-color:rgba(50,100,220,0.5); }
+.ks:hover .ks-char { box-shadow: 0 0 20px currentColor; }
+.ks-name { font-size: 11px; letter-spacing: 0.2em; color: rgba(245,237,216,0.5); }
+
+/* 설명 */
+.hero-desc {
+  font-size: clamp(12px, 1.5vw, 14px);
+  color: rgba(245,237,216,0.55);
+  line-height: 2;
+  letter-spacing: 0.06em;
+  margin-bottom: 36px;
+  animation: fadeIn 1s 0.4s ease both;
+}
+
+/* CTA */
+.cta-row {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  animation: fadeIn 1s 0.5s ease both;
+}
+.btn-start {
+  position: relative;
+  padding: 16px 48px;
+  background: linear-gradient(135deg, #6b0f0f 0%, #a02020 40%, #c0392b 60%, #6b0f0f 100%);
+  border: 1px solid rgba(200,146,42,0.6);
+  color: var(--gold-lt);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.2em;
+  cursor: pointer; text-decoration: none;
+  overflow: hidden; transition: all 0.3s;
+  display: inline-block;
+}
+.btn-start::before {
+  content: '';
+  position: absolute; top: -50%; left: -60%; width: 40%; height: 200%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,200,0.25), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 3s 2s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{left:-60%} 50%{left:120%} }
+.btn-start:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(180,30,30,0.6), 0 0 20px rgba(200,146,42,0.3); }
+
+.btn-info {
+  padding: 16px 36px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(200,146,42,0.3);
+  color: rgba(245,237,216,0.6);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px; letter-spacing: 0.15em;
+  cursor: pointer; text-decoration: none;
+  display: inline-block; transition: all 0.3s;
+}
+.btn-info:hover { border-color: var(--gold); color: var(--gold-lt); background: rgba(200,146,42,0.08); }
+
+/* 스크롤 */
+.scroll-cue {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(200,146,42,0.4); font-size: 10px; letter-spacing: 0.3em;
+  animation: fadeIn 2s 1s ease both;
+}
+.scroll-bar { width: 1px; height: 44px; background: linear-gradient(180deg, transparent, var(--gold)); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+/* ══════════════════════════════
+   전장 섹션
+══════════════════════════════ */
+.section {
+  position: relative; padding: 90px 24px;
+  overflow: hidden;
+}
+.section::before {
+  content: ''; position: absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.section-bg-deco {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(200,146,42,0.04) 0%, transparent 60%);
+}
+
+.sec-eyebrow { text-align:center; font-size:10px; letter-spacing:0.5em; color:var(--gold); text-transform:uppercase; margin-bottom:12px; }
+.sec-title { text-align:center; font-family:'Ma Shan Zheng',serif; font-size:clamp(26px,5vw,46px); letter-spacing:0.15em; color:var(--parch); margin-bottom:56px; }
+.sec-title span { color:var(--gold-lt); }
+
+/* 삼국 카드 */
+.kingdom-cards {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 3px;
+  max-width: 960px; margin: 0 auto;
+}
+.k-card {
+  position: relative; padding: 52px 32px 44px;
+  text-align: center; overflow: hidden; cursor: pointer;
+  transition: transform 0.4s, box-shadow 0.4s;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.k-card::after {
+  content: ''; position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.4s;
+}
+.k-card:hover { transform: translateY(-6px); }
+.k-card:hover::after { opacity: 1; }
+
+.k-card.wei { background: linear-gradient(160deg,rgba(120,10,10,0.25),rgba(60,5,5,0.1)); }
+.k-card.wei::after { background: radial-gradient(ellipse at 50% 0%, rgba(180,30,30,0.35), transparent 65%); }
+.k-card.shu { background: linear-gradient(160deg,rgba(10,100,10,0.22),rgba(5,55,5,0.08)); }
+.k-card.shu::after { background: radial-gradient(ellipse at 50% 0%, rgba(30,160,30,0.3), transparent 65%); }
+.k-card.wu  { background: linear-gradient(160deg,rgba(10,40,130,0.22),rgba(5,20,70,0.08)); }
+.k-card.wu::after  { background: radial-gradient(ellipse at 50% 0%, rgba(30,80,200,0.3), transparent 65%); }
+
+.k-big-char {
+  font-family: 'Ma Shan Zheng', serif;
+  font-size: 88px; line-height: 1;
+  margin-bottom: 18px; display: block;
+  filter: drop-shadow(0 0 20px currentColor);
+}
+.k-card.wei .k-big-char { color: #dd4444; }
+.k-card.shu .k-big-char { color: #44cc44; }
+.k-card.wu  .k-big-char { color: #4488ee; }
+
+.k-lord-name { font-size: 16px; font-weight: 700; color: var(--parch); letter-spacing: 0.2em; margin-bottom: 6px; }
+.k-lord-title { font-size: 11px; color: rgba(245,237,216,0.4); letter-spacing: 0.15em; margin-bottom: 18px; }
+.k-divider { width: 40px; height: 1px; background: currentColor; margin: 0 auto 18px; opacity: 0.3; }
+.k-desc { font-size: 12px; color: rgba(245,237,216,0.55); line-height: 2; }
+
+/* 전력 바 */
+.k-stats { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
+.stat-row { display: flex; align-items: center; gap: 10px; font-size: 10px; letter-spacing: 0.1em; color: rgba(245,237,216,0.4); }
+.stat-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.stat-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
+.k-card.wei .stat-fill { background: linear-gradient(90deg, #a02020, #e05555); }
+.k-card.shu .stat-fill { background: linear-gradient(90deg, #1a8020, #44cc44); }
+.k-card.wu  .stat-fill { background: linear-gradient(90deg, #1a40a0, #4488ee); }
+
+/* ── 영웅 갤러리 ── */
+.heroes-section { background: #080602; }
+.hero-gallery {
+  display: flex; justify-content: center; gap: 16px;
+  flex-wrap: wrap; max-width: 960px; margin: 0 auto;
+}
+.hero-card {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  cursor: pointer; transition: all 0.35s; padding: 16px 12px;
+  border: 1px solid rgba(200,146,42,0.08);
+  background: rgba(0,0,0,0.3);
+  min-width: 120px;
+}
+.hero-card:hover { transform: translateY(-8px); border-color: rgba(200,146,42,0.35); background: rgba(200,146,42,0.06); }
+.hero-portrait {
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 2px solid rgba(200,146,42,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; background: radial-gradient(ellipse at 40% 30%, #2a1a08, #0e0700);
+  transition: all 0.35s;
+}
+.hero-card:hover .hero-portrait { border-color: var(--gold); box-shadow: 0 0 24px rgba(200,146,42,0.45); }
+.h-cn { font-family:'Ma Shan Zheng',serif; font-size:20px; color:var(--parch); letter-spacing:0.08em; }
+.h-kr { font-size:10px; color:rgba(245,237,216,0.38); letter-spacing:0.2em; }
+.h-role { font-size:10px; color:var(--gold); letter-spacing:0.1em; margin-top:2px; }
+
+/* ── AI 기능 ── */
+.ai-section { background: #0a0700; }
+.ai-grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  gap: 20px; max-width: 960px; margin: 0 auto;
+}
+.ai-card {
+  padding: 36px 24px;
+  border: 1px solid rgba(200,146,42,0.12);
+  background: rgba(200,146,42,0.03);
+  position: relative; overflow: hidden;
+  transition: all 0.35s; cursor: default;
+}
+.ai-card::before {
+  content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.35s;
+}
+.ai-card::after {
+  content: attr(data-num);
+  position: absolute; right: 16px; bottom: 12px;
+  font-family: 'Ma Shan Zheng', serif; font-size: 56px;
+  color: rgba(200,146,42,0.06); line-height: 1;
+}
+.ai-card:hover { border-color: rgba(200,146,42,0.35); background: rgba(200,146,42,0.07); transform: translateY(-4px); }
+.ai-card:hover::before { opacity: 1; }
+.ai-icon { font-size:30px; margin-bottom:14px; }
+.ai-title { font-size:13px; font-weight:700; color:var(--gold-lt); letter-spacing:0.18em; margin-bottom:10px; }
+.ai-desc  { font-size:12px; color:rgba(245,237,216,0.48); line-height:1.9; }
+
+/* ── 최종 CTA ── */
+.final-cta {
+  background: linear-gradient(180deg, #0a0700 0%, #150900 50%, #0D0900 100%);
+  padding: 110px 24px; text-align: center; position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: ''; position: absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.final-cta-fire {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(200,80,10,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 20% at 30% 80%, rgba(180,60,5,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 30% 20% at 70% 75%, rgba(160,50,5,0.12) 0%, transparent 50%);
+  animation: flickerFire 5s ease-in-out infinite alternate;
+}
+.cta-eyebrow { font-size:11px; letter-spacing:0.4em; color:var(--gold); margin-bottom:20px; position:relative; z-index:2; }
+.cta-big {
+  font-family:'Ma Shan Zheng',serif;
+  font-size:clamp(40px,8vw,90px);
+  background: linear-gradient(160deg, #fff5cc 0%, var(--gold-lt) 40%, var(--gold) 70%, #a06010 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  filter: drop-shadow(0 0 40px rgba(200,146,42,0.5));
+  margin-bottom:12px; position:relative; z-index:2;
+}
+.cta-sub { font-size:13px; color:rgba(245,237,216,0.45); letter-spacing:0.3em; margin-bottom:44px; position:relative; z-index:2; }
+.cta-btn-wrap { position:relative; z-index:2; }
+
+/* 푸터 */
+footer {
+  background: #060402; padding: 28px;
+  text-align: center; border-top:1px solid rgba(200,146,42,0.08);
+  font-size:10px; color:rgba(245,237,216,0.2); letter-spacing:0.2em;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* 반응형 */
+@media(max-width:700px) {
+  .kingdom-cards { grid-template-columns:1fr; }
+  .cta-row { flex-direction:column; align-items:center; }
+  .kingdom-symbols { gap:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 파티클 -->
+<div id="particles"></div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="bg-base"></div>
+  <div class="bg-fire"></div>
+  <div class="bg-mountains"></div>
+  <div class="fog-layer"></div>
+  <div class="border-frame"></div>
+  <div class="top-line"></div>
+  <div class="corner-deco tl"></div>
+  <div class="corner-deco tr"></div>
+  <div class="corner-deco bl"></div>
+  <div class="corner-deco br"></div>
+
+  <div class="hero-content">
+    <div class="era-badge">
+      <div class="dot"></div>
+      AI · STRATEGY · SIMULATION
+      <div class="dot"></div>
+    </div>
+
+    <div class="sub-title">천 하 를 　 제 패 하 라</div>
+
+    <div class="fire-title-wrap">
+      <div class="fire-glow"></div>
+      <div class="main-title-cn">天下統一</div>
+    </div>
+
+    <div class="triple-divider">
+      <span class="line"></span>
+      <span class="diamond">◆ ◆ ◆</span>
+      <span class="line r"></span>
+    </div>
+
+    <div class="kingdom-symbols">
+      <div class="ks wei">
+        <div class="ks-char">魏</div>
+        <div class="ks-name">위 · 조조</div>
+      </div>
+      <div class="ks shu">
+        <div class="ks-char">蜀</div>
+        <div class="ks-name">촉 · 유비</div>
+      </div>
+      <div class="ks wu">
+        <div class="ks-char">吳</div>
+        <div class="ks-name">오 · 손권</div>
+      </div>
+    </div>
+
+    <div class="hero-desc">
+      난세의 전장, 용의 불꽃이 하늘을 가르고<br>
+      삼국의 운명은 그대의 전략에 달려 있다
+    </div>
+
+    <div class="cta-row">
+      <a href="./game.html" class="btn-start">⚔&nbsp; 천하통일 시작</a>
+      <a href="#kingdoms" class="btn-info">세력 선택 →</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="scroll-bar"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- ══ 삼국 세력 ══ -->
+<section class="section" id="kingdoms" style="background:#0e0900;">
+  <div class="section-bg-deco"></div>
+  <div class="sec-eyebrow">Choose Your Kingdom</div>
+  <div class="sec-title">세 <span>왕국</span>의 선택</div>
+
+  <div class="kingdom-cards">
+    <!-- 위 -->
+    <div class="k-card wei">
+      <span class="k-big-char">魏</span>
+      <div class="k-lord-name">조조 &nbsp;曹操</div>
+      <div class="k-lord-title">위왕 · 치세의 능신, 난세의 간웅</div>
+      <div class="k-divider" style="color:#dd4444;"></div>
+      <div class="k-desc">압도적 군세와 냉철한 책략으로<br>중원을 장악하라</div>
+      <div class="k-stats">
+        <div class="stat-row">⚔ 군사<div class="stat-bar"><div class="stat-fill" style="width:92%"></div></div></div>
+        <div class="stat-row">🏰 방어<div class="stat-bar"><div class="stat-fill" style="width:78%"></div></div></div>
+        <div class="stat-row">📜 책략<div class="stat-bar"><div class="stat-fill" style="width:85%"></div></div></div>
+      </div>
+    </div>
+    <!-- 촉 -->
+    <div class="k-card shu">
+      <span class="k-big-char">蜀</span>
+      <div class="k-lord-name">유비 &nbsp;劉備</div>
+      <div class="k-lord-title">촉한 황제 · 인의의 군주</div>
+      <div class="k-divider" style="color:#44cc44;"></div>
+      <div class="k-desc">인의와 덕으로 민심을 얻어<br>한실을 부흥하라</div>
+      <div class="k-stats">
+        <div class="stat-row">⚔ 군사<div class="stat-bar"><div class="stat-fill" style="width:70%"></div></div></div>
+        <div class="stat-row">🏰 방어<div class="stat-bar"><div class="stat-fill" style="width:72%"></div></div></div>
+        <div class="stat-row">📜 책략<div class="stat-bar"><div class="stat-fill" style="width:96%"></div></div></div>
+      </div>
+    </div>
+    <!-- 오 -->
+    <div class="k-card wu">
+      <span class="k-big-char">吳</span>
+      <div class="k-lord-name">손권 &nbsp;孫權</div>
+      <div class="k-lord-title">오왕 · 강동의 맹호</div>
+      <div class="k-divider" style="color:#4488ee;"></div>
+      <div class="k-desc">수군의 패권과 외교술로<br>강남을 수호하라</div>
+      <div class="k-stats">
+        <div class="stat-row">⚔ 군사<div class="stat-bar"><div class="stat-fill" style="width:76%"></div></div></div>
+        <div class="stat-row">🏰 방어<div class="stat-bar"><div class="stat-fill" style="width:88%"></div></div></div>
+        <div class="stat-row">📜 책략<div class="stat-bar"><div class="stat-fill" style="width:80%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 영웅 ══ -->
+<section class="section heroes-section">
+  <div class="sec-eyebrow">Legendary Heroes</div>
+  <div class="sec-title">난세의 <span>영웅</span></div>
+  <div class="hero-gallery">
+    <div class="hero-card">
+      <div class="hero-portrait">🧠</div>
+      <div class="h-cn">諸葛亮</div>
+      <div class="h-kr">제갈량</div>
+      <div class="h-role">군사 · 책략가</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-portrait">👑</div>
+      <div class="h-cn">劉備</div>
+      <div class="h-kr">유비</div>
+      <div class="h-role">촉한 황제</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-portrait">🗡️</div>
+      <div class="h-cn">關羽</div>
+      <div class="h-kr">관우</div>
+      <div class="h-role">무신 · 의형제</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-portrait">🏯</div>
+      <div class="h-cn">曹操</div>
+      <div class="h-kr">조조</div>
+      <div class="h-role">위왕 · 패자</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-portrait">🌊</div>
+      <div class="h-cn">孫權</div>
+      <div class="h-kr">손권</div>
+      <div class="h-role">오왕 · 강동</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-portrait">🐉</div>
+      <div class="h-cn">馬超</div>
+      <div class="h-kr">마초</div>
+      <div class="h-role">서량 · 맹장</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ AI 기능 ══ -->
+<section class="section ai-section">
+  <div class="sec-eyebrow">Powered by AI</div>
+  <div class="sec-title"><span>AI</span> 전략 엔진</div>
+  <div class="ai-grid">
+    <div class="ai-card" data-num="一">
+      <div class="ai-icon">🤖</div>
+      <div class="ai-title">AI 군사 분석</div>
+      <div class="ai-desc">전황을 실시간 분석하고 최적의 전략을 즉시 제안합니다</div>
+    </div>
+    <div class="ai-card" data-num="二">
+      <div class="ai-icon">🗺️</div>
+      <div class="ai-title">삼국 전략 지도</div>
+      <div class="ai-desc">위·촉·오 세력의 실시간 지도로 전황을 한눈에 파악합니다</div>
+    </div>
+    <div class="ai-card" data-num="三">
+      <div class="ai-icon">⚡</div>
+      <div class="ai-title">즉각 전술 판단</div>
+      <div class="ai-desc">AI의 신속한 전술 분석으로 매 순간 최선의 선택을 내립니다</div>
+    </div>
+    <div class="ai-card" data-num="四">
+      <div class="ai-icon">📜</div>
+      <div class="ai-title">역사 시나리오</div>
+      <div class="ai-desc">적벽대전, 오장원 등 실제 역사 기반 전략 시뮬레이션</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 최종 CTA ══ -->
+<section class="final-cta">
+  <div class="final-cta-fire"></div>
+  <div class="cta-eyebrow">· THE KINGDOM AWAITS ·</div>
+  <div class="cta-big">天 下 는 하 나 다</div>
+  <div class="cta-sub">용의 불꽃이 전장을 가른다 — 지금 전략을 세워라</div>
+  <div class="cta-btn-wrap">
+    <a href="./game.html" class="btn-start" style="font-size:16px;padding:20px 64px;">
+      ⚔&nbsp; 천하통일 시작하기
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 &nbsp;天下統一 · 삼국지 AI 전략 시뮬레이션 &nbsp;·&nbsp; All Rights Reserved
+</footer>
+
+<script>
+// 파티클 (불씨 + 별 효과)
+const container = document.getElementById('particles');
+const colors = ['#ff6b1a','#ffa040','#ffcc60','#c8922a','#ff4020','#ffe080'];
+
+for(let i = 0; i < 60; i++) {
+  const p = document.createElement('div');
+  p.className = 'spark';
+  const size = Math.random() * 3 + 1;
+  const x = Math.random() * 100;
+  const dur = Math.random() * 12 + 8;
+  const delay = Math.random() * 12;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${x}%; bottom:${Math.random()*30}%;
+    background:${color};
+    box-shadow: 0 0 ${size*3}px ${color};
+    animation-duration:${dur}s;
+    animation-delay:${delay}s;
+  `;
+  container.appendChild(p);
+}
+
+// 세력 카드 통계 바 애니메이션 (스크롤 진입 시)
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.stat-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => bar.style.width = w, 100);
+      });
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.k-card').forEach(c => {
+  c.querySelectorAll('.stat-fill').forEach(b => {
+    const orig = b.style.width; b.style.width = '0'; b.dataset.orig = orig;
+  });
+  observer.observe(c);
+});
+</script>
+</body>
+</html>
