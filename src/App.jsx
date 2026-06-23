@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import HanjaBattle from "./HanjaBattle";
+import BattleScreen from "./BattleScreen";
+import SamgukjiText from "./SamgukjiText";
 
 // ══════════════════════════════════════════════════════════════════
 // ── 진선미 철학 v2 ────────────────────────────────────────────────────
@@ -1061,7 +1063,7 @@ function HeroBackground() {
       <rect width="700" height="420" fill="url(#hFog)" y="200"/>
 
       {/* 타이틀 */}
-      <text x="350" y="320" textAnchor="middle" fontSize="40" fontWeight="700" fill="url(#hGold)" fontFamily="serif" letterSpacing="10" filter="url(#hSG)">天下統一</text>
+      <text x="350" y="320" textAnchor="middle" fontSize="40" fontWeight="700" fill="url(#hGold)" fontFamily="'Noto Serif KR', serif" letterSpacing="10" filter="url(#hSG)">天下統一</text>
       <text x="350" y="355" textAnchor="middle" fontSize="13" fill="rgba(200,170,100,0.75)" fontFamily="serif" letterSpacing="5">삼국지 AI 무한 전략 시뮬레이션</text>
       <line x1="140" y1="370" x2="560" y2="370" stroke="rgba(200,160,40,0.35)" strokeWidth="0.8"/>
       <circle cx="350" cy="370" r="3.5" fill="rgba(200,160,40,0.7)"/>
@@ -1271,6 +1273,8 @@ export default function SamgukjiGame() {
   const totalMil = Object.values(milStats).reduce((a,b)=>a+b,0);
   const avgWisdom = roundCount>0 ? Math.round(totalWisdom/roundCount) : 0;
 
+  if(gameMode === 'textgame') return <SamgukjiText lord={lord} onBack={()=>{setGameMode('strategy');setPhase('intro');}}/>;
+  if(gameMode === 'battle') return <BattleScreen lord={lord} onBack={()=>{setGameMode('strategy');setPhase('intro');}} onHanja={()=>setGameMode('hanja')}/>;
   if(gameMode === 'hanja') return <HanjaBattle onBack={()=>setGameMode('strategy')}/>;
 
   return (
@@ -1457,7 +1461,7 @@ export default function SamgukjiGame() {
             {/* 타이틀 */}
             <div style={{textAlign:"center",padding:"24px 0 16px"}}>
               <div style={{fontSize:13,color:G.dim,letterSpacing:"0.3em",marginBottom:6}}>◈ 天下統一 · 삼국지 AI 무한 전략 시뮬레이션</div>
-              <div style={{fontSize:28,fontWeight:900,color:"#f5d050",letterSpacing:"0.18em",textShadow:"0 0 24px rgba(240,200,60,0.5)",marginBottom:4}}>天下統一</div>
+              <div style={{fontSize:28,fontWeight:900,color:"#f5d050",letterSpacing:"0.18em",textShadow:"0 0 24px rgba(240,200,60,0.5)",marginBottom:4,fontFamily:"'Noto Serif KR',serif"}}>天下統一</div>
               <div style={{fontSize:15,color:G.text,lineHeight:1.75}}>
                 세상이 요지경이다. <span style={{color:G.gold}}>세상을 이롭게</span> 할 뜻을 품고<br/>
                 하늘의 氣를 받고 글(한자)의 도(道)를 익히고<br/>
@@ -1478,9 +1482,6 @@ export default function SamgukjiGame() {
                 </div>
               </button>
             )}
-            <button style={{...btn(),width:"100%",fontSize:18,padding:"16px",letterSpacing:"0.15em",marginBottom:8}} onClick={()=>setPhase("lord")}>⚔ 군주를 선택하라</button>
-            <button style={{...btn("rgba(200,80,40,0.85)","#fff"),width:"100%",fontSize:16,padding:"13px",letterSpacing:"0.1em",border:"1px solid rgba(220,100,60,0.6)",marginBottom:14}} onClick={()=>setGameMode('hanja')}>🀄 한자 전투 모드 — 적장을 털어라!</button>
-
             {/* 단계 안내 카드 */}
             <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
               {[["입지(立志)","🌅","뜻을 세워라"],["취인(聚人)","👥","사람을 모아라"],["척토(拓土)","🗺️","영토를 넓혀라"],["일통(一統)","👑","천하를 통일하라"]].map(([n,e,d])=>(
@@ -1522,6 +1523,10 @@ export default function SamgukjiGame() {
             <div style={{borderRadius:6,overflow:"hidden",marginBottom:12,opacity:0.85}}>
               <HeroBackground/>
             </div>
+
+            {/* 시작 버튼 — 하단 */}
+            <button style={{width:"100%",fontSize:20,padding:"18px",letterSpacing:"0.18em",background:"linear-gradient(90deg,#8b0000,#c8601c,#c8a030)",border:"2px solid rgba(240,180,40,0.7)",borderRadius:6,color:"#fff",fontWeight:900,cursor:"pointer",fontFamily:"inherit",boxShadow:"0 0 24px rgba(200,100,20,0.5)",marginBottom:10}} onClick={()=>setPhase("lord")}>⚔ 천하쟁패 시작 — 적장을 털어라!</button>
+            <button style={{width:"100%",fontSize:17,padding:"15px",letterSpacing:"0.1em",background:"rgba(255,255,255,0.05)",border:"1.5px solid rgba(200,160,40,0.5)",borderRadius:6,color:G.goldL,fontWeight:700,cursor:"pointer",fontFamily:"inherit",marginBottom:14}} onClick={()=>setGameMode('textgame')}>📜 삼국지 원문 학습 — 한 문장씩 정진</button>
           </div>
         )}
 
@@ -1534,17 +1539,19 @@ export default function SamgukjiGame() {
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(190px,1fr))",gap:10,marginBottom:14}}>
               {LORDS.map(l=>(
-                <div key={l.id} className="lc" style={{background:lord?.id===l.id?`${l.color}22`:"rgba(255,255,255,0.06)",border:`2px solid ${lord?.id===l.id?l.color:"rgba(200,155,45,0.45)"}`,borderRadius:6,padding:"16px 13px",cursor:"pointer",textAlign:"center",transition:"all 0.2s",transform:lord?.id===l.id?"translateY(-3px)":"none"}} onClick={()=>setLord(l)}>
+                <div key={l.id} className="lc" style={{background:lord?.id===l.id?`${l.color}22`:"rgba(255,255,255,0.06)",border:`2px solid ${lord?.id===l.id?l.color:"rgba(200,155,45,0.45)"}`,borderRadius:6,padding:"16px 13px",cursor:"pointer",textAlign:"center",transition:"all 0.2s",transform:lord?.id===l.id?"translateY(-3px)":"none",display:"flex",flexDirection:"column"}} onClick={()=>setLord(l)}>
                   <div style={{fontSize:34,marginBottom:6}}>{l.emoji}</div>
                   <div style={{fontSize:20,fontWeight:900,color:l.color,marginBottom:2,textShadow:`0 0 10px ${l.color}66`}}>{l.name}</div>
                   <div style={{fontSize:14,color:"rgba(245,215,80,0.92)",letterSpacing:"0.12em",marginBottom:6,fontWeight:700}}>{l.hanja} · {l.title}</div>
-                  <div style={{fontSize:13,color:"rgba(230,210,165,0.88)",fontStyle:"italic",lineHeight:1.65,marginBottom:8}}>"{l.creed}"</div>
-                  {[["덕망",l.stat.virtue,"#e06844"],["지략",l.stat.strategy,"#4888d8"],["무력",l.stat.force,"#42b068"]].map(([lb,v,c])=>(
-                    <div key={lb} style={{marginBottom:4}}>
-                      <div style={{display:"flex",justifyContent:"space-between",fontSize:13,color:"rgba(220,200,155,0.9)",fontWeight:700,marginBottom:2}}><span>{lb}</span><span style={{color:c}}>{v}</span></div>
-                      <div style={{...barTrack,height:7}}><div style={bar(v,c)}/></div>
-                    </div>
-                  ))}
+                  <div style={{fontSize:13,color:"rgba(230,210,165,0.88)",fontStyle:"italic",lineHeight:1.65,marginBottom:8,minHeight:"3.3em",display:"flex",alignItems:"center",justifyContent:"center"}}>"{l.creed}"</div>
+                  <div style={{marginTop:"auto"}}>
+                    {[["덕망",l.stat.virtue,"#e06844"],["지략",l.stat.strategy,"#4888d8"],["무력",l.stat.force,"#42b068"]].map(([lb,v,c])=>(
+                      <div key={lb} style={{marginBottom:4}}>
+                        <div style={{display:"flex",justifyContent:"space-between",fontSize:13,color:"rgba(220,200,155,0.9)",fontWeight:700,marginBottom:2}}><span>{lb}</span><span style={{color:c}}>{v}</span></div>
+                        <div style={{...barTrack,height:7}}><div style={bar(v,c)}/></div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -1554,8 +1561,8 @@ export default function SamgukjiGame() {
                   <div style={{fontSize:14,color:"rgba(225,205,160,0.92)",lineHeight:1.85,fontWeight:500}}>{lord.profile}</div>
                   <div style={{fontSize:13,color:"rgba(240,210,90,0.8)",marginTop:6,fontWeight:600}}>동료: {lord.allies} | 라이벌: {lord.rivals}</div>
                 </div>
-                <button style={{...btn(lord.color,"#fff"),width:"100%",fontSize:17,letterSpacing:"0.1em"}} onClick={()=>startGame(lord)}>
-                  {lord.emoji} {lord.name}의 기치를 세운다 ⚔
+                <button style={{...btn(lord.color,"#fff"),width:"100%",fontSize:17,letterSpacing:"0.1em"}} onClick={()=>{startGame(lord);setGameMode('battle');}}>
+                  {lord.emoji} {lord.name}(으)로 천하쟁패 시작! ⚔
                 </button>
               </div>
             )}

@@ -49,6 +49,30 @@ const ACTION_CATS = {
   strategy: [5,14,16],
 };
 
+// 진선미 → 카테고리 매핑
+// 眞(天) - 하늘은 진실무망하고 자강불식하다
+// 善(地) - 땅은 후덕재물하고 계지자선한다
+// 美(人) - 사람은 성지자성하고 교이만물한다
+const JSM_CATS = {
+  jin:  [0,13,12,15,14,5],  // 眞(天): 數字·時節·方位·動態·干支·天體
+  seon: [6,8,10,7,3,4],     // 善(地): 地理·住居·宮室·衣食·動物·植物
+  mi:   [1,2,16,9,11,17],   // 美(人): 人體·呼稱·狀況·道具·兵器·其他
+};
+
+// 전투 정적 상황 (AI 키 없을 때 사용)
+const BATTLE_SITS = [
+  "조조의 대군이 관도에 집결했다. 원소의 70만 대군과 맞닥뜨린 상황!",
+  "적벽에 불길이 치솟는다. 조조의 수군이 화공에 휘청이고 있다!",
+  "형주 성문이 열렸다. 여몽의 오군이 야밤에 기습해 온다!",
+  "가정에서 마속이 산 위에 진을 쳤다. 장합의 군이 물길을 끊었다!",
+  "합비 성벽 앞에 10만 오군이 집결했다. 장료가 선제 기습을 결정한다!",
+  "원소가 기주에서 남하했다. 조조의 7만 군으로 70만에 맞선다!",
+  "동탁이 낙양을 장악했다. 천자를 등에 업고 천하에 호령한다!",
+  "유비가 세 번째로 융중을 찾았다. 제갈량이 마침내 초당 문을 열었다!",
+  "사마의가 오장원 맞은편에 진영을 쳤다. 싸우지 않고 지구전을 편다!",
+  "적장이 전열을 정비하고 있다. 하늘이 붉게 물들었다!",
+];
+
 // 적장 6인
 const ENEMIES = [
   { id:"dt", name:"동탁", hanja:"董卓", title:"낙양의 폭군", emoji:"😈", color:"#cc3030",
@@ -77,33 +101,58 @@ const ENEMIES = [
     items:["💰강동재산전부","🛡️오나라갑옷","👑오황제칭호","🐎강동준마","🌾강남군량","🚩오나라깃발","🗺️건업지도","👗황제용포","🏯건업성","⚙️오나라수군","🏛️오황궁","⚔️오보검","🧭수로전술도","⏳강동시계","🔮오나라부적","🏇오마","🧠마지막참모","📦삼국유산"] },
 ];
 
-// 아군 장수 5인 (상담 + 전투)
+// 아군 장수 10인 (상담 + 전투)
 const GENERALS = [
   { id:"jl", name:"제갈량", hanja:"諸葛亮", emoji:"🦅", color:"#4a90d9",
     intro:"주군, 한자 전투로 적을 제압하겠나이다!",
-    correct:"훌륭하십니다! 역시 주군이십니다! 臥薪嘗膽의 정신으로!",
+    correct:"훌륭하십니다! 역시 주군이십니다! 와신상담의 정신으로!",
     wrong:"주군... 솔직히 좀 창피하지 않으십니까? 다시 하시옵소서.",
-    advisorStyle:"제갈량: 차분하고 지혜롭게, 삼국지 故事成語와 전략 인용. 이후 맥락에 맞는 한자 1글자 제시." },
+    advisorStyle:"제갈량: 차분하고 지혜롭게, 삼국지 고사성어와 전략 인용. 이후 맥락에 맞는 한자 1글자 제시." },
   { id:"jb", name:"장비", hanja:"張飛", emoji:"🐯", color:"#cc4040",
-    intro:"야! 나 張飛다! 덤벼라 이 놈들아!",
+    intro:"야! 나 장비다! 덤벼라 이 놈들아!",
     correct:"그렇지! 바로 이거다! 이따위 놈들은 이렇게 이겨버려!",
-    wrong:"이 멍청한 놈아! 戰도 모르냐! 다시 해봐!",
+    wrong:"이 멍청한 놈아! 전쟁도 모르냐! 다시 해봐!",
     advisorStyle:"장비: 거칠고 직설적이지만 의리 있게. 약한 욕설·구어체 허용. 용기 관련 한자 제시." },
   { id:"gu", name:"관우", hanja:"關羽", emoji:"🌙", color:"#9b2020",
-    intro:"관우(關羽)다. 의(義)로써 싸우자.",
-    correct:"훌륭하다! 그것이 바로 충의(忠義)의 힘이다!",
-    wrong:"으음... 의(義)를 앞세웠지만 학식이 부족하군.",
+    intro:"관우다. 의리로써 싸우자.",
+    correct:"훌륭하다! 그것이 바로 충의의 힘이다!",
+    wrong:"으음... 의리를 앞세웠지만 학식이 부족하군.",
     advisorStyle:"관우: 충의롭고 의연하게. 의리와 충성 강조. 의리 관련 한자 제시." },
   { id:"yb", name:"유비", hanja:"劉備", emoji:"🦁", color:"#b5341a",
-    intro:"유비(劉備)다. 함께 천하를 위해 싸우자!",
+    intro:"유비다. 함께 천하를 위해 싸우자!",
     correct:"아, 훌륭해! 역시 내 편이 되어줄 인재로군!",
     wrong:"음... 어렵지? 괜찮아. 실패해도 일어나면 된다.",
-    advisorStyle:"유비: 따뜻하고 인자하게. 인덕(仁德) 강조. 인의 관련 한자 제시." },
+    advisorStyle:"유비: 따뜻하고 인자하게. 인덕 강조. 인의 관련 한자 제시." },
   { id:"ma", name:"마초", hanja:"馬超", emoji:"🐎", color:"#7a2080",
-    intro:"마초(馬超)다! 서량 철기로 쓸어버린다!",
+    intro:"마초다! 서량 철기로 쓸어버린다!",
     correct:"좋아! 역시 실력이 있어! 서량 철기처럼 돌진해!",
     wrong:"흠... 아직 멀었군. 나 같은 맹장은 이런 실수 안 해.",
     advisorStyle:"마초: 호방하고 거침없이. 담력과 용맹 강조. 전투 관련 한자 제시." },
+  { id:"zl", name:"조자룡", hanja:"趙子龍", emoji:"🐲", color:"#1a7a50",
+    intro:"나는 조자룡! 백만 대군 속에서도 살아 돌아온다!",
+    correct:"훌륭하오! 이것이 바로 백만 대군을 뚫는 힘이오!",
+    wrong:"흠... 전장에서 이런 실수는 목숨을 잃소. 다시 하시오.",
+    advisorStyle:"조자룡: 충성스럽고 용맹하게. 충의와 담력 강조. 용기 관련 한자 제시." },
+  { id:"hc", name:"황충", hanja:"黃忠", emoji:"🏹", color:"#c87820",
+    intro:"황충이다! 노익장을 보여주마!",
+    correct:"허허! 잘했구나! 노익장이 무엇인지 보여주마!",
+    wrong:"이봐! 늙은이도 이건 아는데... 다시 해보게.",
+    advisorStyle:"황충: 노련하고 결단력 있게. 경험과 용기 강조. 전략 관련 한자 제시." },
+  { id:"wy", name:"위연", hanja:"魏延", emoji:"🗡️", color:"#6a20a0",
+    intro:"위연이다! 나를 막을 자가 누구냐!",
+    correct:"잘했다! 역시! 나 위연의 부하답다!",
+    wrong:"허! 이런 것도 못 맞춰? 제대로 다시 해라!",
+    advisorStyle:"위연: 자신만만하고 공격적으로. 용맹과 전략 강조. 전투 관련 한자 제시." },
+  { id:"gy", name:"강유", hanja:"姜維", emoji:"🌠", color:"#1a60c0",
+    intro:"강유다! 승상의 뜻을 이어받았다!",
+    correct:"훌륭합니다! 승상께서도 흐뭇해하실 것입니다!",
+    wrong:"아... 승상께서 보셨다면 안타까워하셨을 것입니다.",
+    advisorStyle:"강유: 지략적이고 충성스럽게. 승상의 유지 계승 강조. 전략 관련 한자 제시." },
+  { id:"wp", name:"왕평", hanja:"王平", emoji:"🛡️", color:"#5a4020",
+    intro:"왕평이다! 신중하게 나아가겠다!",
+    correct:"잘했네. 신중하게 생각했기에 맞출 수 있었던 것이야.",
+    wrong:"서두르면 안 된다네. 신중하게 다시 생각해보게.",
+    advisorStyle:"왕평: 신중하고 차분하게. 방어와 신중함 강조. 전략 관련 한자 제시." },
 ];
 
 // 계급
@@ -139,21 +188,91 @@ async function callClaude(messages, system, key){
   return d.content?.map(b=>b.text||"").join("")||"";
 }
 
-async function genProblem(catId, difficulty, key){
+// 카테고리별 2글자 이상 단어 DB — 생활한자 20개 × 18류 = 360단어
+const WORD_DB = [
+  // 0 數字類
+  [{h:"一等",r:"일등",m:"1등"},{h:"二等",r:"이등",m:"2등"},{h:"三角",r:"삼각",m:"삼각형"},{h:"四角",r:"사각",m:"사각형"},{h:"百分",r:"백분",m:"백분율"},{h:"千萬",r:"천만",m:"천만"},{h:"數字",r:"수자",m:"숫자"},{h:"計算",r:"계산",m:"계산"},{h:"加算",r:"가산",m:"더하기"},{h:"減算",r:"감산",m:"빼기"},{h:"合計",r:"합계",m:"합계"},{h:"平均",r:"평균",m:"평균"},{h:"比率",r:"비율",m:"비율"},{h:"倍數",r:"배수",m:"배수"},{h:"半分",r:"반분",m:"절반"},{h:"全部",r:"전부",m:"전부"},{h:"部分",r:"부분",m:"부분"},{h:"整數",r:"정수",m:"정수"},{h:"分數",r:"분수",m:"분수"},{h:"百萬",r:"백만",m:"백만"}],
+  // 1 人體類
+  [{h:"頭部",r:"두부",m:"머리"},{h:"面目",r:"면목",m:"면목"},{h:"眼耳",r:"안이",m:"눈과 귀"},{h:"鼻口",r:"비구",m:"코와 입"},{h:"手足",r:"수족",m:"손발"},{h:"身體",r:"신체",m:"몸"},{h:"心臟",r:"심장",m:"심장"},{h:"筋骨",r:"근골",m:"근골"},{h:"血液",r:"혈액",m:"혈액"},{h:"肩背",r:"견배",m:"어깨와 등"},{h:"腰部",r:"요부",m:"허리"},{h:"膝蓋",r:"슬개",m:"무릎"},{h:"手指",r:"수지",m:"손가락"},{h:"頸部",r:"경부",m:"목"},{h:"胸部",r:"흉부",m:"가슴"},{h:"腹部",r:"복부",m:"배"},{h:"背部",r:"배부",m:"등"},{h:"臂膀",r:"비방",m:"팔"},{h:"腿部",r:"퇴부",m:"다리"},{h:"頭腦",r:"두뇌",m:"두뇌"}],
+  // 2 呼稱類
+  [{h:"將軍",r:"장군",m:"장군"},{h:"大人",r:"대인",m:"대인"},{h:"主君",r:"주군",m:"주군"},{h:"先生",r:"선생",m:"선생"},{h:"夫人",r:"부인",m:"부인"},{h:"公子",r:"공자",m:"공자"},{h:"大王",r:"대왕",m:"대왕"},{h:"丞相",r:"승상",m:"승상"},{h:"太守",r:"태수",m:"태수"},{h:"都督",r:"도독",m:"도독"},{h:"軍師",r:"군사",m:"군사"},{h:"參謀",r:"참모",m:"참모"},{h:"武將",r:"무장",m:"무장"},{h:"文臣",r:"문신",m:"문신"},{h:"部下",r:"부하",m:"부하"},{h:"同僚",r:"동료",m:"동료"},{h:"兄弟",r:"형제",m:"형제"},{h:"父母",r:"부모",m:"부모"},{h:"子女",r:"자녀",m:"자녀"},{h:"朋友",r:"붕우",m:"친구"}],
+  // 3 動物類
+  [{h:"白馬",r:"백마",m:"흰 말"},{h:"黑牛",r:"흑우",m:"검은 소"},{h:"飛鳥",r:"비조",m:"나는 새"},{h:"游魚",r:"유어",m:"노니는 물고기"},{h:"家畜",r:"가축",m:"가축"},{h:"野獸",r:"야수",m:"야수"},{h:"虎豹",r:"호표",m:"호랑이와 표범"},{h:"狐狸",r:"호리",m:"여우"},{h:"兎鹿",r:"토록",m:"토끼와 사슴"},{h:"雕鷹",r:"조응",m:"독수리와 매"},{h:"蛟龍",r:"교룡",m:"교룡"},{h:"猿猴",r:"원후",m:"원숭이"},{h:"獅子",r:"사자",m:"사자"},{h:"牛馬",r:"우마",m:"소와 말"},{h:"羊豚",r:"양돈",m:"양과 돼지"},{h:"雞犬",r:"계견",m:"닭과 개"},{h:"貓鼠",r:"묘서",m:"고양이와 쥐"},{h:"魚蝦",r:"어하",m:"물고기와 새우"},{h:"蛇龜",r:"사구",m:"뱀과 거북"},{h:"鴨鵝",r:"압아",m:"오리와 거위"}],
+  // 4 植物類
+  [{h:"松竹",r:"송죽",m:"소나무와 대나무"},{h:"梅花",r:"매화",m:"매화"},{h:"菊花",r:"국화",m:"국화"},{h:"牡丹",r:"모란",m:"모란"},{h:"蓮花",r:"연화",m:"연꽃"},{h:"桃花",r:"도화",m:"복숭아꽃"},{h:"竹林",r:"죽림",m:"대나무숲"},{h:"松林",r:"송림",m:"소나무숲"},{h:"草木",r:"초목",m:"풀과 나무"},{h:"藥草",r:"약초",m:"약초"},{h:"百合",r:"백합",m:"백합"},{h:"桂花",r:"계화",m:"계수나무꽃"},{h:"芙蓉",r:"부용",m:"부용화"},{h:"薔薇",r:"장미",m:"장미"},{h:"杏花",r:"행화",m:"살구꽃"},{h:"李花",r:"이화",m:"자두꽃"},{h:"柳樹",r:"유수",m:"버드나무"},{h:"銀杏",r:"은행",m:"은행나무"},{h:"楓葉",r:"풍엽",m:"단풍잎"},{h:"綠草",r:"녹초",m:"푸른 풀"}],
+  // 5 天體類
+  [{h:"太陽",r:"태양",m:"태양"},{h:"月光",r:"월광",m:"달빛"},{h:"星星",r:"성성",m:"별"},{h:"北斗",r:"북두",m:"북두칠성"},{h:"銀河",r:"은하",m:"은하수"},{h:"流星",r:"유성",m:"유성"},{h:"日月",r:"일월",m:"해와 달"},{h:"天空",r:"천공",m:"하늘"},{h:"日食",r:"일식",m:"일식"},{h:"月食",r:"월식",m:"월식"},{h:"明星",r:"명성",m:"밝은 별"},{h:"夕陽",r:"석양",m:"석양"},{h:"黎明",r:"여명",m:"새벽"},{h:"朝陽",r:"조양",m:"아침 해"},{h:"月夜",r:"월야",m:"달밤"},{h:"星夜",r:"성야",m:"별밤"},{h:"天氣",r:"천기",m:"날씨"},{h:"大氣",r:"대기",m:"대기"},{h:"晴天",r:"청천",m:"맑은 하늘"},{h:"雨天",r:"우천",m:"비 오는 날"}],
+  // 6 地理類
+  [{h:"山川",r:"산천",m:"산과 내"},{h:"平野",r:"평야",m:"평야"},{h:"江湖",r:"강호",m:"강과 호수"},{h:"海洋",r:"해양",m:"해양"},{h:"島嶼",r:"도서",m:"섬"},{h:"半島",r:"반도",m:"반도"},{h:"大陸",r:"대륙",m:"대륙"},{h:"高原",r:"고원",m:"고원"},{h:"草原",r:"초원",m:"초원"},{h:"沙漠",r:"사막",m:"사막"},{h:"瀑布",r:"폭포",m:"폭포"},{h:"溪谷",r:"계곡",m:"계곡"},{h:"丘陵",r:"구릉",m:"언덕"},{h:"湖水",r:"호수",m:"호수"},{h:"河川",r:"하천",m:"강"},{h:"海岸",r:"해안",m:"해안"},{h:"山脈",r:"산맥",m:"산맥"},{h:"盆地",r:"분지",m:"분지"},{h:"平原",r:"평원",m:"평원"},{h:"海灣",r:"해만",m:"만"}],
+  // 7 衣食類
+  [{h:"衣服",r:"의복",m:"옷"},{h:"飮食",r:"음식",m:"음식"},{h:"糧食",r:"양식",m:"양식"},{h:"料理",r:"요리",m:"요리"},{h:"食事",r:"식사",m:"식사"},{h:"服裝",r:"복장",m:"복장"},{h:"飯菜",r:"반찬",m:"반찬"},{h:"酒食",r:"주식",m:"술과 음식"},{h:"穀物",r:"곡물",m:"곡물"},{h:"蔬菜",r:"소채",m:"채소"},{h:"果實",r:"과실",m:"과일"},{h:"肉類",r:"육류",m:"고기"},{h:"魚類",r:"어류",m:"생선"},{h:"茶酒",r:"다주",m:"차와 술"},{h:"醬油",r:"장유",m:"간장"},{h:"米飯",r:"미반",m:"쌀밥"},{h:"麵類",r:"면류",m:"국수"},{h:"湯類",r:"탕류",m:"국"},{h:"乾糧",r:"건량",m:"건식량"},{h:"軍糧",r:"군량",m:"군 식량"}],
+  // 8 住居類
+  [{h:"家屋",r:"가옥",m:"집"},{h:"住宅",r:"주택",m:"주택"},{h:"門戶",r:"문호",m:"문호"},{h:"庭園",r:"정원",m:"정원"},{h:"廚房",r:"주방",m:"부엌"},{h:"寢室",r:"침실",m:"침실"},{h:"書齋",r:"서재",m:"서재"},{h:"倉庫",r:"창고",m:"창고"},{h:"浴室",r:"욕실",m:"욕실"},{h:"居室",r:"거실",m:"거실"},{h:"客室",r:"객실",m:"객실"},{h:"玄關",r:"현관",m:"현관"},{h:"廊下",r:"낭하",m:"복도"},{h:"牆壁",r:"장벽",m:"담벽"},{h:"窓門",r:"창문",m:"창문"},{h:"階段",r:"계단",m:"계단"},{h:"地下",r:"지하",m:"지하"},{h:"屋上",r:"옥상",m:"옥상"},{h:"門前",r:"문전",m:"문 앞"},{h:"宮室",r:"궁실",m:"궁궐"}],
+  // 9 道具類
+  [{h:"筆墨",r:"필묵",m:"붓과 먹"},{h:"紙硯",r:"지연",m:"종이와 벼루"},{h:"燈火",r:"등화",m:"등불"},{h:"棋盤",r:"기반",m:"바둑판"},{h:"琴瑟",r:"금슬",m:"현악기"},{h:"旗幟",r:"기치",m:"깃발"},{h:"印章",r:"인장",m:"도장"},{h:"地圖",r:"지도",m:"지도"},{h:"羅盤",r:"나반",m:"나침반"},{h:"藥箱",r:"약상",m:"약상자"},{h:"工具",r:"공구",m:"공구"},{h:"器械",r:"기계",m:"기계"},{h:"算盤",r:"산반",m:"주판"},{h:"書冊",r:"서책",m:"책"},{h:"弓箭",r:"궁전",m:"활과 화살"},{h:"旗鼓",r:"기고",m:"깃발과 북"},{h:"筆硯",r:"필연",m:"붓과 벼루"},{h:"銅鏡",r:"동경",m:"구리 거울"},{h:"戰鼓",r:"전고",m:"전투 북"},{h:"車船",r:"거선",m:"수레와 배"}],
+  // 10 宮室類
+  [{h:"宮殿",r:"궁전",m:"궁전"},{h:"城郭",r:"성곽",m:"성곽"},{h:"樓閣",r:"누각",m:"누각"},{h:"亭子",r:"정자",m:"정자"},{h:"廟堂",r:"묘당",m:"묘당"},{h:"正殿",r:"정전",m:"정전"},{h:"內殿",r:"내전",m:"내전"},{h:"東宮",r:"동궁",m:"동궁"},{h:"城門",r:"성문",m:"성문"},{h:"城壁",r:"성벽",m:"성벽"},{h:"城樓",r:"성루",m:"성루"},{h:"望樓",r:"망루",m:"망루"},{h:"行宮",r:"행궁",m:"행궁"},{h:"離宮",r:"이궁",m:"별궁"},{h:"宗廟",r:"종묘",m:"종묘"},{h:"社稷",r:"사직",m:"사직"},{h:"廣場",r:"광장",m:"광장"},{h:"殿閣",r:"전각",m:"전각"},{h:"別宮",r:"별궁",m:"별궁"},{h:"御所",r:"어소",m:"임금의 처소"}],
+  // 11 兵器類
+  [{h:"長劍",r:"장검",m:"장검"},{h:"弓矢",r:"궁시",m:"활과 화살"},{h:"盾牌",r:"순패",m:"방패"},{h:"鐵甲",r:"철갑",m:"철갑"},{h:"長槍",r:"장창",m:"장창"},{h:"大刀",r:"대도",m:"큰 칼"},{h:"戰斧",r:"전부",m:"전투 도끼"},{h:"投石",r:"투석",m:"돌 던지기"},{h:"連弩",r:"연노",m:"연속 쇠뇌"},{h:"毒箭",r:"독전",m:"독화살"},{h:"戰車",r:"전차",m:"전차"},{h:"雲梯",r:"운제",m:"공성 사다리"},{h:"鐵錘",r:"철추",m:"쇠망치"},{h:"短刀",r:"단도",m:"단도"},{h:"匕首",r:"비수",m:"비수"},{h:"鐵棒",r:"철봉",m:"쇠몽둥이"},{h:"飛刀",r:"비도",m:"날리는 칼"},{h:"火炮",r:"화포",m:"화포"},{h:"戈矛",r:"과모",m:"창"},{h:"兵甲",r:"병갑",m:"갑옷"}],
+  // 12 方位類
+  [{h:"東西",r:"동서",m:"동서"},{h:"南北",r:"남북",m:"남북"},{h:"左右",r:"좌우",m:"좌우"},{h:"前後",r:"전후",m:"앞뒤"},{h:"上下",r:"상하",m:"위아래"},{h:"中央",r:"중앙",m:"중앙"},{h:"方向",r:"방향",m:"방향"},{h:"位置",r:"위치",m:"위치"},{h:"東南",r:"동남",m:"동남"},{h:"西北",r:"서북",m:"서북"},{h:"正面",r:"정면",m:"정면"},{h:"側面",r:"측면",m:"측면"},{h:"內外",r:"내외",m:"안팎"},{h:"遠近",r:"원근",m:"원근"},{h:"高低",r:"고저",m:"높낮이"},{h:"深淺",r:"심천",m:"깊고 얕음"},{h:"前方",r:"전방",m:"앞쪽"},{h:"後方",r:"후방",m:"뒤쪽"},{h:"左側",r:"좌측",m:"왼쪽"},{h:"右側",r:"우측",m:"오른쪽"}],
+  // 13 時節類
+  [{h:"春天",r:"춘천",m:"봄"},{h:"夏天",r:"하천",m:"여름"},{h:"秋天",r:"추천",m:"가을"},{h:"冬天",r:"동천",m:"겨울"},{h:"四季",r:"사계",m:"사계절"},{h:"節氣",r:"절기",m:"절기"},{h:"歲月",r:"세월",m:"세월"},{h:"新年",r:"신년",m:"새해"},{h:"秋夕",r:"추석",m:"추석"},{h:"冬至",r:"동지",m:"동지"},{h:"立春",r:"입춘",m:"입춘"},{h:"白露",r:"백로",m:"백로"},{h:"霜降",r:"상강",m:"상강"},{h:"寒食",r:"한식",m:"한식"},{h:"年末",r:"연말",m:"연말"},{h:"月初",r:"월초",m:"월초"},{h:"週末",r:"주말",m:"주말"},{h:"平日",r:"평일",m:"평일"},{h:"春秋",r:"춘추",m:"봄과 가을"},{h:"冬夏",r:"동하",m:"겨울과 여름"}],
+  // 14 干支類
+  [{h:"甲子",r:"갑자",m:"갑자년"},{h:"乙丑",r:"을축",m:"을축년"},{h:"丙寅",r:"병인",m:"병인년"},{h:"丁卯",r:"정묘",m:"정묘년"},{h:"戊辰",r:"무진",m:"무진년"},{h:"己巳",r:"기사",m:"기사년"},{h:"庚午",r:"경오",m:"경오년"},{h:"辛未",r:"신미",m:"신미년"},{h:"壬申",r:"임신",m:"임신년"},{h:"癸酉",r:"계유",m:"계유년"},{h:"甲戌",r:"갑술",m:"갑술년"},{h:"乙亥",r:"을해",m:"을해년"},{h:"子年",r:"자년",m:"쥐띠 해"},{h:"丑年",r:"축년",m:"소띠 해"},{h:"寅年",r:"인년",m:"호랑이띠 해"},{h:"卯年",r:"묘년",m:"토끼띠 해"},{h:"辰年",r:"진년",m:"용띠 해"},{h:"巳年",r:"사년",m:"뱀띠 해"},{h:"午年",r:"오년",m:"말띠 해"},{h:"未年",r:"미년",m:"양띠 해"}],
+  // 15 動態類
+  [{h:"出發",r:"출발",m:"출발"},{h:"到着",r:"도착",m:"도착"},{h:"前進",r:"전진",m:"전진"},{h:"後退",r:"후퇴",m:"후퇴"},{h:"上昇",r:"상승",m:"상승"},{h:"下降",r:"하강",m:"하강"},{h:"移動",r:"이동",m:"이동"},{h:"停止",r:"정지",m:"정지"},{h:"出入",r:"출입",m:"출입"},{h:"往來",r:"왕래",m:"왕래"},{h:"進行",r:"진행",m:"진행"},{h:"歸還",r:"귀환",m:"귀환"},{h:"上陸",r:"상륙",m:"상륙"},{h:"乘車",r:"승차",m:"승차"},{h:"登山",r:"등산",m:"등산"},{h:"出門",r:"출문",m:"문 나섬"},{h:"入門",r:"입문",m:"입문"},{h:"進退",r:"진퇴",m:"진퇴"},{h:"攻守",r:"공수",m:"공격과 수비"},{h:"行進",r:"행진",m:"행진"}],
+  // 16 狀況類
+  [{h:"危機",r:"위기",m:"위기"},{h:"緊急",r:"긴급",m:"긴급"},{h:"平和",r:"평화",m:"평화"},{h:"勝利",r:"승리",m:"승리"},{h:"敗北",r:"패배",m:"패배"},{h:"包圍",r:"포위",m:"포위"},{h:"突破",r:"돌파",m:"돌파"},{h:"逆轉",r:"역전",m:"역전"},{h:"決戰",r:"결전",m:"결전"},{h:"停戰",r:"정전",m:"정전"},{h:"講和",r:"강화",m:"강화"},{h:"降伏",r:"항복",m:"항복"},{h:"撤退",r:"철퇴",m:"철수"},{h:"進擊",r:"진격",m:"진격"},{h:"好機",r:"호기",m:"좋은 기회"},{h:"轉機",r:"전기",m:"전환점"},{h:"窮地",r:"궁지",m:"궁지"},{h:"膠着",r:"교착",m:"교착"},{h:"混亂",r:"혼란",m:"혼란"},{h:"勝敗",r:"승패",m:"승패"}],
+  // 17 其他類
+  [{h:"天下",r:"천하",m:"천하"},{h:"英雄",r:"영웅",m:"영웅"},{h:"忠義",r:"충의",m:"충의"},{h:"仁德",r:"인덕",m:"인덕"},{h:"勇猛",r:"용맹",m:"용맹"},{h:"威嚴",r:"위엄",m:"위엄"},{h:"名譽",r:"명예",m:"명예"},{h:"功績",r:"공적",m:"공적"},{h:"運命",r:"운명",m:"운명"},{h:"吉凶",r:"길흉",m:"길흉"},{h:"禍福",r:"화복",m:"화복"},{h:"榮辱",r:"영욕",m:"영욕"},{h:"興亡",r:"흥망",m:"흥망"},{h:"强弱",r:"강약",m:"강약"},{h:"平安",r:"평안",m:"평안"},{h:"幸福",r:"행복",m:"행복"},{h:"自由",r:"자유",m:"자유"},{h:"希望",r:"희망",m:"희망"},{h:"夢想",r:"몽상",m:"꿈"},{h:"仁義",r:"인의",m:"인의"}],
+];
+
+async function genProblem(catId, difficulty, key, usedList=[], battleCtx='', masteredMap={}){
   const cat = CATS[catId];
-  const diff = difficulty<30?"초급(쉬운 기초 한자)":difficulty<60?"중급":"고급(어렵고 획 많은 한자)";
+  const diff = difficulty<30?"초급":difficulty<60?"중급":"고급";
+  const exclude = usedList.length>0 ? `이미출제(제외): ${usedList.slice(-10).join('·')}. ` : '';
+  const ctxHint = battleCtx ? `현재상황: ${battleCtx.slice(0,40)}. 상황연관단어우선. ` : '';
   const sys = `삼국지 한자 게임 문제 출제자. ${cat.name}(${cat.kor}) ${diff} 문제를 JSON으로 출제.
-{"hanja":"한자1글자","reading":"음독","meaning":"뜻(5자이내)","context":"삼국지 예시(20자이내)","wrong1":"틀린뜻1","wrong2":"틀린뜻2","wrong3":"틀린뜻3"}
-오답은 헷갈리도록. 순수 JSON만 응답.`;
+반드시 2글자 이상 한자 단어. 단일 글자 금지. ${exclude}${ctxHint}
+{"hanja":"2글자이상한자단어","reading":"음독","meaning":"뜻(8자이내)","context":"삼국지예시(25자이내)","wrong1":"2글자이상뜻1","wrong2":"2글자이상뜻2","wrong3":"2글자이상뜻3"}
+오답도 2글자이상 의미. 순수 JSON만 응답.`;
   try{
-    const raw = await callClaude([{role:"user",content:`${cat.name} ${diff} 문제 출제`}],sys,key);
+    const raw = await callClaude([{role:"user",content:`${cat.name} ${diff} 2글자이상 단어 출제`}],sys,key);
     const j = JSON.parse(raw.replace(/```json\n?|\n?```/g,'').trim());
+    if(!j.hanja||j.hanja.length<2) throw new Error('단글자');
     return { hanja:j.hanja, reading:j.reading, meaning:j.meaning, context:j.context,
       options:shuffle([j.meaning,j.wrong1,j.wrong2,j.wrong3]), correct:j.meaning, catId, fromAI:true };
-  }catch{ return genStatic(catId); }
+  }catch{ return genStatic(catId, new Set(usedList), masteredMap, battleCtx); }
 }
 
-function genStatic(catId){
+function genStatic(catId, usedSet=new Set(), masteredMap={}, battleCtx=''){
+  const words = WORD_DB[catId];
+  if(words && words.length>0){
+    const allWords = WORD_DB.flatMap(ws=>ws);
+    // 최근 출제 단어의 한자 글자들 (연속 겹침 방지)
+    const recentChars = new Set([...usedSet].flatMap(h=>[...h]));
+    // 전투 상황 키워드
+    const ctxChars = battleCtx ? [...battleCtx].filter(c=>/[一-鿿]/.test(c)) : [];
+    // 마스터(3연속 정답) 제외
+    const notMastered = words.filter(w=>(masteredMap[w.h]||0)<3);
+    const basePool = notMastered.length>0 ? notMastered : words;
+    // 이번 세션 미출제 우선
+    const notUsed = basePool.filter(w=>!usedSet.has(w.h));
+    const sessionPool = notUsed.length>0 ? notUsed : basePool;
+    // 1순위: 상황 연관 + 글자 겹침 없음
+    const priority = sessionPool.filter(w=>
+      ![...w.h].some(c=>recentChars.has(c)) && ctxChars.some(c=>w.h.includes(c))
+    );
+    // 2순위: 글자 겹침 없음
+    const noOverlap = sessionPool.filter(w=>![...w.h].some(c=>recentChars.has(c)));
+    const pool = priority.length>0 ? priority : noOverlap.length>0 ? noOverlap : sessionPool;
+    const correct = pool[Math.floor(Math.random()*pool.length)];
+    const wrongs = shuffle(allWords.filter(w=>w.m!==correct.m)).slice(0,3);
+    return { hanja:correct.h, reading:correct.r, meaning:correct.m,
+      context:`${correct.h}(${correct.r}) — ${CATS[catId].kor}`,
+      options:shuffle([correct.m,...wrongs.map(w=>w.m)]), correct:correct.m, catId, fromAI:false };
+  }
   const cat = CATS[catId];
   const all = CATS.flatMap(c=>c.hanja);
   const correct = cat.hanja[Math.floor(Math.random()*cat.hanja.length)];
@@ -176,6 +295,31 @@ B급유머·구어체 가능. 삼국지 실제 에피소드 인용 필수.`;
   }
 }
 
+async function genBattleContext(enemyName, enemyHanja, generalName, generalHanja, rankName, correctN, strippedN, key){
+  const sys = `삼국지 전투 상황·대사 생성자. 삼국지 역사 기반으로 매번 완전히 다른 전투 상황과 장수 대사를 JSON으로 생성.
+{"situation":"전투상황(50자이내,삼국지역사기반,긴박하게)","ally":"${generalName} 대사(30자이내,성격반영,B급유머·비어허용)","enemy":"${enemyName} 대사(30자이내,위협적,개성있게)"}
+순수 JSON만 응답.`;
+  const ctx = `아군:${generalName}(${generalHanja}), 적장:${enemyName}(${enemyHanja}), 계급:${rankName}, 정답${correctN}회, 탈취${strippedN}/18`;
+  try{
+    const raw = await callClaude([{role:"user",content:ctx}],sys,key);
+    const j = JSON.parse(raw.replace(/```json\n?|\n?```/g,'').trim());
+    if(j?.situation) return j;
+    throw new Error('empty');
+  }catch{ return { situation:BATTLE_SITS[Math.floor(Math.random()*BATTLE_SITS.length)], ally:null, enemy:null }; }
+}
+
+async function genHanjaDetail(hanja, reading, meaning, key){
+  const sys = `한자 단어 학습 정보 생성기. 아래 형식의 순수 JSON만 응답.
+{"readings":[{"char":"廟","sound":"묘","kun":"사당 묘"}],"explanation":["뜻풀이1","뜻풀이2","뜻풀이3"],"notes":["유의사항1(사자성어나 파생어 포함)","유의사항2","유의사항3"],"episode":"삼국지 역사 에피소드 2~3문장","usage":["삼국지 활용 예시1","삼국지 활용 예시2"]}
+readings는 한자 글자 수만큼. explanation·notes·usage는 각 2~3개. 매번 다른 내용 생성.`;
+  try{
+    const raw = await callClaude([{role:"user",content:`한자:${hanja}, 독음:${reading}, 뜻:${meaning}`}],sys,key);
+    const j = JSON.parse(raw.replace(/```json\n?|\n?```/g,'').trim());
+    if(j?.readings) return j;
+    throw new Error('empty');
+  }catch{ return null; }
+}
+
 // ══════════════════════════════════════════════════════════
 // 메인 컴포넌트
 // ══════════════════════════════════════════════════════════
@@ -188,6 +332,7 @@ export default function HanjaBattle({ onBack }){
   const [screen, setScreen]         = useState('setup');   // setup|general|battle|advisor|victory
   const [general, setGeneral]       = useState(null);
   const [enemyIdx, setEnemyIdx]     = useState(0);
+  const [selectedEnemyIdx, setSelectedEnemyIdx] = useState(0);
   const [stripped, setStripped]     = useState(Array(18).fill(false));
   const [catStats, setCatStats]     = useState(Array(18).fill(0));
   const [servants, setServants]     = useState([]);
@@ -226,9 +371,29 @@ export default function HanjaBattle({ onBack }){
   // 랭크업 팝업
   const [rankPopup, setRankPopup]   = useState(null);
 
+  // 전투 상황 텍스트
+  const [battleSit, setBattleSit]   = useState('');
+  const [sitLoading, setSitLoading] = useState(false);
+  // 동적 장수 대사
+  const [allyLine, setAllyLine]     = useState('');
+  const [enemyLine, setEnemyLine]   = useState('');
+  // 출제 이력 (세션)
+  const [usedSet, setUsedSet]       = useState(()=>new Set());
+  // 마스터 맵 (3연속 정답 → 영구 제외) — localStorage 동기화
+  const [masteredMap, setMasteredMap] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('hanja-mastered-map')||'{}'); }catch{ return {}; } });
+  useEffect(()=>{ localStorage.setItem('hanja-mastered-map', JSON.stringify(masteredMap)); },[masteredMap]);
+  // 정답 후 상세 학습 정보
+  const [hanjaDetail, setHanjaDetail]     = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+  // 북마크 (localStorage)
+  const [bookmarks, setBookmarks] = useState(()=>{ try{ return JSON.parse(localStorage.getItem('hanja-bookmarks')||'[]'); }catch{ return []; } });
+  useEffect(()=>{ localStorage.setItem('hanja-bookmarks', JSON.stringify(bookmarks)); },[bookmarks]);
+
   const enemy = ENEMIES[enemyIdx];
   const strippedN = stripped.filter(Boolean).length;
   const rank = getRank(correctN);
+  const masteredCount = Object.values(masteredMap).filter(v=>v>=3).length;
+  const totalWordCount = WORD_DB.flat().length;
 
   // ── 타이머
   useEffect(()=>{
@@ -243,17 +408,38 @@ export default function HanjaBattle({ onBack }){
   // ── 참모 스크롤
   useEffect(()=>{ if(chatRef.current) chatRef.current.scrollTop=chatRef.current.scrollHeight; },[msgs]);
 
+  // ── 전투 상황·대사 자동 생성 (action 단계 진입 시)
+  useEffect(()=>{
+    if(bPhase==='action' && screen==='battle'){
+      setSitLoading(true);
+      setAllyLine(''); setEnemyLine('');
+      if(apiKey && general){
+        genBattleContext(enemy.name, enemy.hanja, general.name, general.hanja, rank.rank, correctN, strippedN, apiKey).then(ctx=>{
+          setBattleSit(ctx.situation); setSitLoading(false);
+          if(ctx.ally) setAllyLine(ctx.ally);
+          if(ctx.enemy) setEnemyLine(ctx.enemy);
+        });
+      } else {
+        setBattleSit(BATTLE_SITS[Math.floor(Math.random()*BATTLE_SITS.length)]);
+        setSitLoading(false);
+      }
+    }
+  },[bPhase, enemyIdx, screen]);
+
   // ── 액션 선택 → 한자 출제
   async function onAction(act){
     setAction(act);
     setBPhase('loading');
     doAnim('atk',600);
-    const cats = ACTION_CATS[act];
+    const cats = JSM_CATS[act] || ACTION_CATS[act] || ACTION_CATS.attack;
     const avail = cats.filter(c=>!stripped[c]);
     const pool  = avail.length>0?avail:cats;
     const catId = pool[Math.floor(Math.random()*pool.length)];
     const diff  = Math.min(90, correctN*4);
-    const p = apiKey ? await genProblem(catId,diff,apiKey) : genStatic(catId);
+    const p = apiKey
+      ? await genProblem(catId, diff, apiKey, [...usedSet], battleSit, masteredMap)
+      : genStatic(catId, usedSet, masteredMap, battleSit);
+    setUsedSet(prev=>new Set([...prev, p.hanja]));
     setProblem(p); setAnswer(null); setIsRight(null);
     setBPhase('question'); startTimer();
   }
@@ -277,6 +463,7 @@ export default function HanjaBattle({ onBack }){
     setIsRight(false); setAnswer(null);
     setWrongN(n=>n+1);
     const newStats=[...catStats]; newStats[problem.catId]=Math.max(0,newStats[problem.catId]-3); setCatStats(newStats);
+    setMasteredMap(prev=>({...prev,[problem.hanja]:0}));
     setNarration(`⏰ 시간 초과! ${enemy.name}: "${enemy.taunt}"`);
     setBPhase('result');
   }
@@ -290,6 +477,15 @@ export default function HanjaBattle({ onBack }){
     const newN=correctN+1; setCorrectN(newN);
     const next=getRank(newN);
     if(prev.rank!==next.rank){ setRankPopup(next); setTimeout(()=>setRankPopup(null),3000); doAnim('rankUp',3000); }
+    // 마스터 카운트 +1 (3회 → 영구 제외)
+    setMasteredMap(prev=>({...prev,[problem.hanja]:Math.min(3,(prev[problem.hanja]||0)+1)}));
+    // 상세 학습 정보 생성
+    setHanjaDetail(null); setDetailLoading(true);
+    if(apiKey){
+      genHanjaDetail(problem.hanja, problem.reading, problem.meaning, apiKey)
+        .then(d=>{ setHanjaDetail(d); setDetailLoading(false); })
+        .catch(()=>setDetailLoading(false));
+    } else { setDetailLoading(false); }
 
     if(!stripped[problem.catId]){
       const ns2=[...stripped]; ns2[problem.catId]=true; setStripped(ns2);
@@ -307,6 +503,7 @@ export default function HanjaBattle({ onBack }){
     doAnim('ko',1000);
     setWrongN(n=>n+1);
     const ns=[...catStats]; if(problem?.catId!==undefined){ ns[problem.catId]=Math.max(0,ns[problem.catId]-5); setCatStats(ns); }
+    setMasteredMap(prev=>({...prev,[problem.hanja]:0}));
     setNarration(`❌ 오답! ${enemy.name}: "${enemy.wrong}"`);
   }
 
@@ -318,7 +515,7 @@ export default function HanjaBattle({ onBack }){
       setServants(s=>[...s,{...enemy}]);
       const next=enemyIdx+1;
       if(next>=ENEMIES.length){ setScreen('victory'); return; }
-      setEnemyIdx(next); setStripped(Array(18).fill(false));
+      setEnemyIdx(next); setStripped(Array(18).fill(false)); setUsedSet(new Set());
       setBPhase('action'); setNarration('');
       doAnim('entrance',800);
     },2600);
@@ -327,6 +524,7 @@ export default function HanjaBattle({ onBack }){
   // ── 다음으로
   function onContinue(){
     setBPhase('action'); setProblem(null); setAnswer(null); setIsRight(null); setNarration(''); setAction(null); setLastItem('');
+    setHanjaDetail(null); setDetailLoading(false);
   }
 
   // ── 참모 상담
@@ -403,7 +601,7 @@ export default function HanjaBattle({ onBack }){
             </div>
           ))}
         </div>
-        <button style={{...btn(),width:"100%",marginBottom:8,fontSize:17,padding:14}} onClick={()=>{ setScreen('setup'); setEnemyIdx(0); setStripped(Array(18).fill(false)); setCatStats(Array(18).fill(0)); setServants([]); setCorrectN(0); setWrongN(0); setBPhase('action'); }}>다시 도전</button>
+        <button style={{...btn(),width:"100%",marginBottom:8,fontSize:17,padding:14}} onClick={()=>{ setScreen('setup'); setEnemyIdx(0); setSelectedEnemyIdx(0); setStripped(Array(18).fill(false)); setCatStats(Array(18).fill(0)); setServants([]); setCorrectN(0); setWrongN(0); setBPhase('action'); }}>다시 도전</button>
         <button style={{...btn("rgba(30,20,10,0.8)",G.dim),width:"100%",fontSize:15,border:`1px solid ${G.border}`}} onClick={onBack}>← 전략 시뮬레이션으로</button>
       </div>
     </div>
@@ -506,10 +704,23 @@ export default function HanjaBattle({ onBack }){
       <div style={{maxWidth:520,width:"100%"}} className="hFade">
         <div style={{textAlign:"center",marginBottom:24}}>
           <div style={{fontSize:50,marginBottom:12}}>⚔️</div>
-          <div style={{fontSize:26,fontWeight:700,color:G.goldL,letterSpacing:"0.1em",marginBottom:6}}>한자 전투 시스템</div>
+          <div style={{fontSize:26,fontWeight:700,color:G.goldL,letterSpacing:"0.1em",marginBottom:6}}>한글文字 전투 시스템</div>
           <div style={{fontSize:15,color:G.dim,lineHeight:1.8}}>
             한자를 맞혀 적장을 털어라!<br/>
             18개 카테고리 한자 완전 정복 후 적장이 항복!
+          </div>
+        </div>
+        {/* 학습 현황 */}
+        <div style={{...box({marginBottom:16,padding:12})}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div>
+              <div style={{fontSize:13,color:G.dim,marginBottom:2}}>📚 단어 마스터 현황</div>
+              <div style={{fontSize:15,fontWeight:700,color:G.goldL}}>{masteredCount} <span style={{fontSize:12,color:G.dim,fontWeight:400}}>/ {totalWordCount} 단어 마스터</span></div>
+            </div>
+            {masteredCount>0&&(
+              <button onClick={()=>{ localStorage.removeItem('hanja-mastered-map'); setMasteredMap({}); }}
+                style={{...btn("rgba(224,80,64,0.12)","#e05040"),padding:"6px 12px",fontSize:12,border:"1px solid rgba(224,80,64,0.3)"}}>초기화</button>
+            )}
           </div>
         </div>
         {/* API 키 설정 */}
@@ -532,31 +743,53 @@ export default function HanjaBattle({ onBack }){
             </div>
           )}
         </div>
-        {/* 적장 목록 */}
+        {/* 적장 선택 */}
         <div style={{...box({marginBottom:16})}}>
-          <div style={{fontSize:14,color:G.dim,marginBottom:10}}>🏴‍☠️ 정복 대상 적장 (6인)</div>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+            <div style={{fontSize:14,color:G.dim}}>🏴‍☠️ 정복할 적장을 선택하라 (6인)</div>
+            <div style={{fontSize:11,color:G.dim}}>클릭하여 선택</div>
+          </div>
           <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-            {ENEMIES.map((e,i)=>(
-              <div key={e.id} style={{background:"rgba(255,255,255,0.03)",border:`1px solid ${e.color}44`,borderRadius:6,padding:"6px 10px",fontSize:13,color:G.text,flex:"1 1 120px",textAlign:"center"}}>
-                <span style={{fontSize:20}}>{e.emoji}</span>
-                <div style={{color:e.color,fontWeight:700}}>{e.name}</div>
-                <div style={{fontSize:11,color:G.dim}}>{e.title}</div>
-              </div>
-            ))}
+            {ENEMIES.map((e,i)=>{
+              const sel = selectedEnemyIdx===i;
+              return (
+                <div key={e.id} onClick={()=>setSelectedEnemyIdx(i)}
+                  className="hOpt"
+                  style={{
+                    background: sel ? `rgba(${e.color.startsWith('#')?parseInt(e.color.slice(1,3),16)+','+parseInt(e.color.slice(3,5),16)+','+parseInt(e.color.slice(5,7),16):'100,80,30'},0.18)` : "rgba(255,255,255,0.03)",
+                    border: sel ? `2px solid ${e.color}` : `1px solid ${e.color}44`,
+                    borderRadius:6, padding:"8px 10px", fontSize:13, color:G.text,
+                    flex:"1 1 100px", textAlign:"center", cursor:"pointer",
+                    transition:"all 0.18s", position:"relative",
+                    boxShadow: sel ? `0 0 14px ${e.color}55` : "none",
+                  }}>
+                  {sel&&<div style={{position:"absolute",top:4,right:5,fontSize:11,color:e.color,fontWeight:700}}>✔</div>}
+                  <span style={{fontSize:22}}>{e.emoji}</span>
+                  <div style={{color:e.color,fontWeight:700,marginTop:2}}>{e.name}</div>
+                  <div style={{fontSize:10,color:G.dim}}>{e.title}</div>
+                </div>
+              );
+            })}
+          </div>
+          {/* 선택 확인 문구 */}
+          <div style={{marginTop:10,padding:"8px 12px",background:`rgba(${
+            (() => { const c=ENEMIES[selectedEnemyIdx].color; return parseInt(c.slice(1,3),16)+','+parseInt(c.slice(3,5),16)+','+parseInt(c.slice(5,7),16); })()
+          },0.12)`,borderRadius:6,border:`1px solid ${ENEMIES[selectedEnemyIdx].color}55`,display:"flex",alignItems:"center",gap:8}}>
+            <span style={{fontSize:20}}>{ENEMIES[selectedEnemyIdx].emoji}</span>
+            <span style={{fontSize:14,color:ENEMIES[selectedEnemyIdx].color,fontWeight:700}}>선택된 적장: {ENEMIES[selectedEnemyIdx].name} — {ENEMIES[selectedEnemyIdx].title}</span>
           </div>
         </div>
         {/* 시스템 설명 */}
         <div style={{...box({marginBottom:20})}}>
-          <div style={{fontSize:14,color:G.dim,marginBottom:8}}>📖 전투 방식</div>
-          {[["⚔️ 공격","兵器·方位·動態 카테고리 한자 출제"],["🛡️ 방어","人體·住居·宮室 카테고리 한자 출제"],["🔮 계책","天體·干支·狀況 카테고리 한자 출제"],["✅ 정답","해당 카테고리 능력치 상승 + 아이템 탈취"],["⏰ 10초","빨리 맞힐수록 보너스 능력치"]].map(([t,d])=>(
+          <div style={{fontSize:14,color:G.dim,marginBottom:8}}>📖 진선미 선택 → 한글文字 문제 연결</div>
+          {[["💎 진(眞)","자강불식 → 數字類·時節類·方位類·動態類·干支類·天體類 출제"],["🌿 선(善)","계지자선 → 地理類·住居類·宮室類·衣食類·動物類·植物類 출제"],["🌸 미(美)","교이만물 → 人體類·呼稱類·狀況類·道具類·兵器類·其他類 출제"],["✅ 정답","단어 문제 우선 출제, 단어 없으면 한 글자 출제"],["⏰ 10초","타임어택: 빨리 맞힐수록 보너스"]].map(([t,d])=>(
             <div key={t} style={{display:"flex",gap:10,marginBottom:6,fontSize:14}}>
-              <span style={{color:G.gold,minWidth:60}}>{t}</span>
+              <span style={{color:G.gold,minWidth:70}}>{t}</span>
               <span style={{color:G.dim}}>{d}</span>
             </div>
           ))}
         </div>
-        <button style={{...btn(),width:"100%",fontSize:18,padding:16,marginBottom:8,letterSpacing:"0.1em"}} onClick={()=>setScreen('general')}>⚔️ 장수 선택 후 출전!</button>
-        <button style={{...btn("rgba(30,20,10,0.8)",G.dim),width:"100%",fontSize:15,border:`1px solid ${G.border}`,padding:12}} onClick={onBack}>← 전략 시뮬레이션으로</button>
+        <button style={{width:"100%",fontSize:20,padding:18,letterSpacing:"0.12em",background:"linear-gradient(90deg,#a07010,#c8a030,#f0d060,#c8a030,#a07010)",border:"2px solid rgba(240,200,60,0.8)",borderRadius:6,color:"#0a0704",fontWeight:900,cursor:"pointer",fontFamily:"inherit",boxShadow:"0 0 28px rgba(200,160,30,0.55)",marginBottom:4}} onClick={()=>{ setEnemyIdx(selectedEnemyIdx); setStripped(Array(18).fill(false)); setUsedSet(new Set()); setScreen('general'); }}>⚔ {ENEMIES[selectedEnemyIdx].name} {ENEMIES[selectedEnemyIdx].emoji} 에게 출전!</button>
       </div>
     </div>
   );
@@ -594,6 +827,10 @@ export default function HanjaBattle({ onBack }){
               <span style={{fontSize:15,fontWeight:700,color:rank.color}}>{rank.emoji} {rank.rank}</span>
               <span style={{fontSize:13,color:G.dim}}>정답 {correctN}회</span>
             </div>
+          </div>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontSize:11,color:G.dim}}>📚 마스터</div>
+            <div style={{fontSize:13,fontWeight:700,color:G.gold}}>{masteredCount}/{totalWordCount}</div>
           </div>
           <button onClick={()=>setScreen('advisor')} style={{...btn("rgba(74,144,217,0.15)","#4a90d9"),padding:"8px 14px",fontSize:13,border:"1px solid rgba(74,144,217,0.3)"}}>
             💬 참모 상담
@@ -668,16 +905,38 @@ export default function HanjaBattle({ onBack }){
                 {narration}
               </div>
             )}
-            <div style={{fontSize:14,color:G.dim,textAlign:"center",marginBottom:10}}>{enemy.name}: "{enemy.intro}"</div>
+
+            {/* AI 전략 상황 */}
+            <div style={{...box({padding:14,marginBottom:10,borderColor:"rgba(200,160,40,0.45)",background:"rgba(12,8,2,0.95)"})}}>
+              {sitLoading
+                ? <div style={{display:"flex",alignItems:"center",gap:8,color:G.dim,fontSize:14}}><div style={{width:14,height:14,border:`2px solid ${G.border}`,borderTopColor:G.gold,borderRadius:"50%",animation:"spin 0.8s linear infinite",flexShrink:0}}/>전략 상황 분석 중...</div>
+                : <div style={{fontSize:15,color:"#d4c49a",lineHeight:1.85,letterSpacing:"0.02em"}}>{battleSit}</div>
+              }
+            </div>
+
+            {/* 장수 · 적장 대사 */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
+              {general&&(
+                <div style={{...box({padding:10,marginBottom:0,borderColor:`${general.color}44`}),fontSize:12,color:G.text,lineHeight:1.65}}>
+                  <span style={{color:general.color,fontWeight:700}}>{general.emoji} {general.name}</span><br/>
+                  <span style={{fontStyle:"italic",color:G.dim}}>"{allyLine || general.intro}"</span>
+                </div>
+              )}
+              <div style={{...box({padding:10,marginBottom:0,borderColor:`${enemy.color}44`}),fontSize:12,color:G.text,lineHeight:1.65}}>
+                <span style={{color:enemy.color,fontWeight:700}}>{enemy.emoji} {enemy.name}</span><br/>
+                <span style={{fontStyle:"italic",color:G.dim}}>"{enemyLine || enemy.intro}"</span>
+              </div>
+            </div>
+
             <div style={{fontSize:15,fontWeight:700,color:G.gold,textAlign:"center",marginBottom:12,letterSpacing:"0.08em"}}>— 공격 방식을 선택하라 —</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
               {[
-                { act:"attack",  emoji:"⚔️", label:"공격", sub:"兵器·方位·動態", color:"#e05040" },
-                { act:"defense", emoji:"🛡️", label:"방어", sub:"人體·住居·宮室", color:"#4a90d9" },
-                { act:"strategy",emoji:"🔮", label:"계책", sub:"天體·干支·狀況", color:"#9b59b6" },
+                { act:"jin",  emoji:"💎", label:"진(眞)", sub:"자강불식", color:"#4a90d9" },
+                { act:"seon", emoji:"🌿", label:"선(善)", sub:"계지자선", color:"#7ab040" },
+                { act:"mi",   emoji:"🌸", label:"미(美)", sub:"교이만물", color:"#c8a030" },
               ].map(({act,emoji,label,sub,color})=>(
                 <button key={act} className="hOpt" onClick={()=>onAction(act)}
-                  style={{...box({padding:14,marginBottom:0,cursor:"pointer",textAlign:"center",transition:"all 0.15s",border:`1px solid ${color}44`})}}>
+                  style={{...box({padding:14,marginBottom:0,cursor:"pointer",textAlign:"center",transition:"all 0.15s",border:`1px solid ${color}55`})}}>
                   <div style={{fontSize:30,marginBottom:6}}>{emoji}</div>
                   <div style={{fontSize:15,fontWeight:700,color,marginBottom:4}}>{label}</div>
                   <div style={{fontSize:11,color:G.dim}}>{sub}</div>
@@ -763,6 +1022,79 @@ export default function HanjaBattle({ onBack }){
               </div>
             )}
 
+            {/* 상세 학습 정보 (정답 시) */}
+            {isRight&&(
+              <div style={{...box({padding:14,marginBottom:10,borderColor:"rgba(74,144,217,0.35)"})}}>
+                {detailLoading?(
+                  <div style={{textAlign:"center",color:G.dim,fontSize:13,padding:"8px 0"}}>📖 학습 정보 생성 중…</div>
+                ):hanjaDetail?(
+                  <>
+                    {/* 음과 훈 */}
+                    {hanjaDetail.readings?.length>0&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:12,color:G.gold,fontWeight:700,marginBottom:5,letterSpacing:"0.05em"}}>📖 음과 훈</div>
+                        {hanjaDetail.readings.map((r,i)=>(
+                          <div key={i} style={{fontSize:13,color:G.text,paddingLeft:8,lineHeight:1.7}}>
+                            · <span style={{color:G.goldL,fontWeight:700}}>{r.char}</span>: {r.sound} — {r.kun}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* 뜻풀이 */}
+                    {hanjaDetail.explanation?.length>0&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:12,color:G.gold,fontWeight:700,marginBottom:5,letterSpacing:"0.05em"}}>📝 뜻풀이</div>
+                        {hanjaDetail.explanation.map((e,i)=>(
+                          <div key={i} style={{fontSize:13,color:G.text,paddingLeft:8,lineHeight:1.7}}>· {e}</div>
+                        ))}
+                      </div>
+                    )}
+                    {/* 유의사항 */}
+                    {hanjaDetail.notes?.length>0&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:12,color:G.gold,fontWeight:700,marginBottom:5,letterSpacing:"0.05em"}}>💡 유의사항</div>
+                        {hanjaDetail.notes.map((n,i)=>(
+                          <div key={i} style={{fontSize:13,color:G.text,paddingLeft:8,lineHeight:1.7}}>· {n}</div>
+                        ))}
+                      </div>
+                    )}
+                    {/* 에피소드 */}
+                    {hanjaDetail.episode&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:12,color:G.gold,fontWeight:700,marginBottom:5,letterSpacing:"0.05em"}}>🎭 에피소드</div>
+                        <div style={{fontSize:13,color:G.text,paddingLeft:8,lineHeight:1.7}}>{hanjaDetail.episode}</div>
+                      </div>
+                    )}
+                    {/* 삼국지 활용 */}
+                    {hanjaDetail.usage?.length>0&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:12,color:G.gold,fontWeight:700,marginBottom:5,letterSpacing:"0.05em"}}>⚔️ 삼국지 활용</div>
+                        {hanjaDetail.usage.map((u,i)=>(
+                          <div key={i} style={{fontSize:13,color:G.text,paddingLeft:8,lineHeight:1.7}}>· {u}</div>
+                        ))}
+                      </div>
+                    )}
+                    {/* 북마크 버튼 */}
+                    <button
+                      style={{background:bookmarks.some(b=>b.hanja===problem?.hanja)?"rgba(240,208,96,0.15)":"rgba(255,255,255,0.05)",
+                        border:`1px solid rgba(200,160,40,${bookmarks.some(b=>b.hanja===problem?.hanja)?0.6:0.25})`,
+                        borderRadius:6,padding:"8px 16px",color:G.gold,fontSize:13,fontWeight:600,
+                        cursor:"pointer",width:"100%",letterSpacing:"0.03em",marginTop:4}}
+                      onClick={()=>{
+                        const key2=problem?.hanja;
+                        if(bookmarks.some(b=>b.hanja===key2)){
+                          setBookmarks(prev=>prev.filter(b=>b.hanja!==key2));
+                        } else {
+                          setBookmarks(prev=>[...prev,{hanja:problem.hanja,reading:problem.reading,meaning:problem.meaning,detail:hanjaDetail,savedAt:Date.now()}]);
+                        }
+                      }}>
+                      {bookmarks.some(b=>b.hanja===problem?.hanja)?"🔖 북마크됨 (해제하려면 클릭)":"☆ 북마크 저장"}
+                    </button>
+                  </>
+                ):null}
+              </div>
+            )}
+
             {/* 장수 대사 */}
             {general&&(
               <div style={{display:"flex",gap:10,marginBottom:12,alignItems:"flex-start"}}>
@@ -774,7 +1106,7 @@ export default function HanjaBattle({ onBack }){
             )}
 
             <button style={{...btn(),width:"100%",fontSize:16,padding:14}} onClick={onContinue}>
-              계속 전투 ⚔️
+              {isRight?"다음 문제로 ➡️":"계속 전투 ⚔️"}
             </button>
           </div>
         )}
