@@ -11,5 +11,11 @@ export default defineConfig({
   },
   server: {
     open: true,
+    // Project lives on a network/SMB share where native fs.watch fails
+    // with "UNKNOWN: watch". Polling is required for the dev server to run.
+    watch: {
+      usePolling: true,
+      interval: 300,
+    },
   },
 })
