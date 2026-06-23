@@ -1,5 +1,5 @@
 {
-  "name": "samgukji3",
+  "name": "samgukji",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://witman3300.github.io/samgukji3",
+  "homepage": "https://samgukji.ai.kr",
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
